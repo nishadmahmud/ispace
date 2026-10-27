@@ -5,6 +5,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/layout/CartDrawer";
 import ToastContainer from "@/components/layout/Toast";
+import MobileBottomNav from "@/components/layout/MobileBottomNav";
+import MobileMenuDrawer from "@/components/layout/MobileMenuDrawer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,10 +41,12 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col bg-[#f8fafc] text-slate-900 selection:bg-[#ef233c] selection:text-white">
         <StoreProvider>
           <Header />
-          <main className="flex-1">
+          <main className="flex-1 pb-16 lg:pb-0">
             {children}
           </main>
           <Footer />
+          <MobileBottomNav />
+          <MobileMenuDrawer />
           <CartDrawer />
           <ToastContainer />
         </StoreProvider>

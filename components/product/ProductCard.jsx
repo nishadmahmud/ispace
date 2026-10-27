@@ -20,20 +20,20 @@ export default function ProductCard({ product }) {
     <>
       <div className="group relative rounded-2xl bg-white border border-gray-200 hover:border-red-500/50 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-xl">
         {/* Top Badges & Actions */}
-        <div className="p-3 pb-0 flex items-start justify-between z-10">
+        <div className="p-2.5 sm:p-3 pb-0 flex items-start justify-between z-10">
           <div className="flex flex-col gap-1 items-start">
             {product.flashDiscount ? (
-              <span className="text-[10px] font-black px-2 py-0.5 rounded-md bg-[#ef233c] text-white tracking-wide uppercase shadow-2xs">
+              <span className="text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2 py-0.5 rounded-md bg-[#ef233c] text-white tracking-wide uppercase shadow-2xs">
                 {product.flashDiscount}
               </span>
             ) : product.badge ? (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 border border-gray-200 tracking-wide uppercase">
+              <span className="text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 border border-gray-200 tracking-wide uppercase">
                 {product.badge}
               </span>
             ) : null}
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1">
             <button
               onClick={() => addToCompare(product)}
               className={`p-1.5 rounded-xl border transition-all ${
@@ -62,10 +62,10 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Product Image Showcase */}
-        <div className="relative p-4 pt-1 flex items-center justify-center overflow-hidden">
+        <div className="relative p-2.5 sm:p-4 pt-1 flex items-center justify-center overflow-hidden">
           <Link
             href={`/product/${product.slug}`}
-            className="block w-full h-48 sm:h-52 relative overflow-hidden rounded-xl bg-gray-50"
+            className="block w-full h-36 sm:h-48 md:h-52 relative overflow-hidden rounded-xl bg-gray-50"
           >
             <img
               src={product.images[0]}
@@ -77,44 +77,44 @@ export default function ProductCard({ product }) {
           {/* Quick View Button overlay on hover */}
           <button
             onClick={() => setIsQuickViewOpen(true)}
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 px-3.5 py-1.5 rounded-xl bg-white/95 backdrop-blur-xs border border-gray-200 text-gray-900 text-[11px] font-bold flex items-center gap-1.5 shadow-lg hover:bg-gray-50"
+            className="hidden sm:flex absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 px-3.5 py-1.5 rounded-xl bg-white/95 backdrop-blur-xs border border-gray-200 text-gray-900 text-[11px] font-bold items-center gap-1.5 shadow-lg hover:bg-gray-50"
           >
             <Eye className="w-3.5 h-3.5 text-[#ef233c]" /> Quick View
           </button>
         </div>
 
         {/* Details & Info */}
-        <div className="p-4 pt-1 flex-1 flex flex-col justify-between space-y-3">
+        <div className="p-2.5 sm:p-4 pt-1 flex-1 flex flex-col justify-between space-y-2.5 sm:space-y-3">
           <div>
             {/* Brand & Category & Rating */}
-            <div className="flex items-center justify-between text-[11px] text-gray-500 mb-1">
-              <span className="font-bold text-gray-500 uppercase tracking-wider">
+            <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-gray-500 mb-1">
+              <span className="font-bold text-gray-500 uppercase tracking-wider truncate mr-1">
                 {product.brand}
               </span>
-              <div className="flex items-center gap-1 text-amber-500">
+              <div className="flex items-center gap-1 text-amber-500 shrink-0">
                 <Star className="w-3 h-3 fill-amber-500" />
                 <span className="font-bold text-gray-800">{product.rating}</span>
-                <span className="text-gray-400 text-[10px]">({product.reviewCount})</span>
+                <span className="text-gray-400 text-[9px] sm:text-[10px]">({product.reviewCount})</span>
               </div>
             </div>
 
             {/* Title */}
             <Link
               href={`/product/${product.slug}`}
-              className="block font-bold text-sm text-gray-900 hover:text-red-600 line-clamp-2 transition-colors leading-snug"
+              className="block font-bold text-xs sm:text-sm text-gray-900 hover:text-red-600 line-clamp-2 transition-colors leading-snug"
             >
               {product.name}
             </Link>
 
             {/* Color preview swatches */}
             {product.colors && product.colors.length > 0 && (
-              <div className="flex items-center gap-1.5 mt-2">
-                {product.colors.map((c) => (
+              <div className="flex items-center gap-1 sm:gap-1.5 mt-1.5 sm:mt-2">
+                {product.colors.slice(0, 4).map((c) => (
                   <button
                     key={c.name}
                     onClick={() => setSelectedColor(c.name)}
                     style={{ backgroundColor: c.hex }}
-                    className={`w-3.5 h-3.5 rounded-full border transition-all ${
+                    className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full border transition-all ${
                       selectedColor === c.name
                         ? "border-[#ef233c] ring-1 ring-[#ef233c] scale-110"
                         : "border-gray-300 opacity-80 hover:opacity-100"
@@ -122,35 +122,35 @@ export default function ProductCard({ product }) {
                     title={c.name}
                   />
                 ))}
-                <span className="text-[10px] text-gray-400 ml-1">
-                  {product.colors.length} {product.colors.length === 1 ? "color" : "colors"}
-                </span>
+                {product.colors.length > 4 && (
+                  <span className="text-[9px] text-gray-400">+{product.colors.length - 4}</span>
+                )}
               </div>
             )}
           </div>
 
           {/* Pricing & CTA */}
-          <div className="pt-2 border-t border-gray-100 space-y-2">
-            <div className="flex items-baseline justify-between">
+          <div className="pt-2 border-t border-gray-100 space-y-1.5 sm:space-y-2">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-0.5 sm:gap-1">
               <div>
-                <span className="text-base font-black text-gray-900">
+                <span className="text-sm sm:text-base font-black text-gray-900">
                   {formatBDT(product.price)}
                 </span>
                 {product.regularPrice > product.price && (
-                  <span className="text-xs text-gray-400 line-through ml-2">
+                  <span className="text-[10px] sm:text-xs text-gray-400 line-through ml-1.5">
                     {formatBDT(product.regularPrice)}
                   </span>
                 )}
               </div>
-              <span className="text-[10px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded font-bold">
+              <span className="text-[9px] sm:text-[10px] text-amber-700 bg-amber-50 px-1.5 sm:px-2 py-0.5 rounded font-bold w-fit">
                 EMI from {formatBDT(emiPerMonth)}/mo
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 pt-1">
+            <div className="grid grid-cols-2 gap-1.5 sm:gap-2 pt-1">
               <Link
                 href={`/product/${product.slug}`}
-                className="w-full py-2 px-3 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-800 text-xs font-bold text-center transition-all"
+                className="w-full py-1.5 sm:py-2 px-1 sm:px-3 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-800 text-[11px] sm:text-xs font-bold text-center transition-all truncate"
               >
                 Details
               </Link>
@@ -161,9 +161,9 @@ export default function ProductCard({ product }) {
                     storage: product.storage?.[0]?.size
                   })
                 }
-                className="w-full py-2 px-3 rounded-xl bg-[#ef233c] hover:bg-[#d90429] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-xs"
+                className="w-full py-1.5 sm:py-2 px-1 sm:px-3 rounded-xl bg-[#ef233c] hover:bg-[#d90429] text-white text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1 transition-all shadow-xs cursor-pointer truncate"
               >
-                <ShoppingBag className="w-3.5 h-3.5" /> Buy
+                <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" /> Buy
               </button>
             </div>
           </div>

@@ -39,13 +39,13 @@ export default function CertifiedPreOwned() {
         </div>
 
         {/* Product Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {preOwnedItems.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
 
           {/* Trade-in Promo Card */}
-          <div className="rounded-2xl bg-gray-50 border border-gray-200 p-6 flex flex-col justify-between text-gray-900 shadow-xs">
+          <div className="col-span-2 sm:col-span-1 rounded-2xl bg-gray-50 border border-gray-200 p-5 sm:p-6 flex flex-col justify-between text-gray-900 shadow-xs">
             <div className="space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-white border border-gray-200 flex items-center justify-center text-[#ef233c] shadow-2xs">
                 <RotateCcw className="w-6 h-6" />

@@ -19,8 +19,8 @@ export default function CartDrawer() {
         onClick={() => setIsCartOpen(false)}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-white border-l border-gray-200 text-gray-900 flex flex-col shadow-2xl">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
+        <div className="w-screen sm:max-w-md bg-white border-l border-gray-200 text-gray-900 flex flex-col shadow-2xl">
           {/* Header */}
           <div className="p-5 border-b border-gray-200 flex items-center justify-between bg-white">
             <div className="flex items-center gap-2">

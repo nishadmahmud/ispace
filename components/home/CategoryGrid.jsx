@@ -43,22 +43,22 @@ export default function CategoryGrid() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 sm:gap-4">
+        <div className="flex overflow-x-auto no-scrollbar gap-2.5 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-4 lg:grid-cols-7 sm:gap-4">
           {categories.map((cat) => {
             const Icon = iconMap[cat.icon] || Zap;
             return (
               <Link
                 key={cat.id}
                 href={`/category/${cat.slug}`}
-                className="group relative rounded-2xl bg-white border border-gray-200 hover:border-red-500/60 p-4 flex flex-col items-center text-center transition-all duration-300 shadow-2xs hover:shadow-md hover:-translate-y-1"
+                className="shrink-0 w-28 sm:w-auto group relative rounded-2xl bg-white border border-gray-200 hover:border-red-500/60 p-3 sm:p-4 flex flex-col items-center text-center transition-all duration-300 shadow-2xs hover:shadow-md hover:-translate-y-1"
               >
-                <div className="w-14 h-14 rounded-2xl bg-gray-100 group-hover:bg-red-50 border border-gray-200 group-hover:border-red-200 flex items-center justify-center text-gray-700 group-hover:text-[#ef233c] transition-all duration-300 mb-3">
-                  <Icon className="w-7 h-7" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gray-100 group-hover:bg-red-50 border border-gray-200 group-hover:border-red-200 flex items-center justify-center text-gray-700 group-hover:text-[#ef233c] transition-all duration-300 mb-2 sm:mb-3">
+                  <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
                 <h3 className="text-xs font-bold text-gray-800 group-hover:text-red-600 line-clamp-1 transition-colors">
                   {cat.name}
                 </h3>
-                <span className="text-[11px] text-gray-500 mt-0.5">
+                <span className="text-[10px] sm:text-[11px] text-gray-500 mt-0.5">
                   {cat.count}
                 </span>
               </Link>

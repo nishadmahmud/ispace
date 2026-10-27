@@ -15,48 +15,48 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 border-t border-gray-200 text-gray-600 text-xs">
+    <footer className="bg-gray-50 border-t border-gray-200 text-gray-600 text-xs pb-16 lg:pb-0">
       {/* Top Value Badges Bar */}
-      <div className="bg-white border-b border-gray-200 py-8">
+      <div className="bg-white border-b border-gray-200 py-6 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-gray-50 border border-gray-200 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center text-[#ef233c] shrink-0">
-                <ShieldCheck className="w-5 h-5" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6">
+            <div className="flex items-center gap-2.5 sm:gap-3.5 p-2.5 sm:p-3.5 rounded-2xl bg-gray-50 border border-gray-200 shadow-xs">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center text-[#ef233c] shrink-0">
+                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <h4 className="text-gray-900 font-bold text-xs">100% Genuine</h4>
-                <p className="text-[11px] text-gray-500">Official Brand Warranty</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-gray-50 border border-gray-200 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 shrink-0">
-                <CreditCard className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-gray-900 font-bold text-xs">0% EMI Facility</h4>
-                <p className="text-[11px] text-gray-500">Up to 36 Months with 24+ Banks</p>
+              <div className="min-w-0">
+                <h4 className="text-gray-900 font-bold text-xs truncate">100% Genuine</h4>
+                <p className="text-[10px] sm:text-[11px] text-gray-500 truncate">Brand Warranty</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-gray-50 border border-gray-200 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600 shrink-0">
-                <Truck className="w-5 h-5" />
+            <div className="flex items-center gap-2.5 sm:gap-3.5 p-2.5 sm:p-3.5 rounded-2xl bg-gray-50 border border-gray-200 shadow-xs">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 shrink-0">
+                <CreditCard className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <h4 className="text-gray-900 font-bold text-xs">Fast Nationwide Delivery</h4>
-                <p className="text-[11px] text-gray-500">24h Dhaka / 48h All Bangladesh</p>
+              <div className="min-w-0">
+                <h4 className="text-gray-900 font-bold text-xs truncate">0% EMI Facility</h4>
+                <p className="text-[10px] sm:text-[11px] text-gray-500 truncate">Up to 36 Months</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-gray-50 border border-gray-200 shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
-                <RotateCcw className="w-5 h-5" />
+            <div className="flex items-center gap-2.5 sm:gap-3.5 p-2.5 sm:p-3.5 rounded-2xl bg-gray-50 border border-gray-200 shadow-xs">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600 shrink-0">
+                <Truck className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <h4 className="text-gray-900 font-bold text-xs">7 Days Replacement</h4>
-                <p className="text-[11px] text-gray-500">Hassle-Free Exchange Policy</p>
+              <div className="min-w-0">
+                <h4 className="text-gray-900 font-bold text-xs truncate">Fast Delivery</h4>
+                <p className="text-[10px] sm:text-[11px] text-gray-500 truncate">Nationwide Service</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5 sm:gap-3.5 p-2.5 sm:p-3.5 rounded-2xl bg-gray-50 border border-gray-200 shadow-xs">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
+                <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
+              <div className="min-w-0">
+                <h4 className="text-gray-900 font-bold text-xs truncate">7 Days Return</h4>
+                <p className="text-[10px] sm:text-[11px] text-gray-500 truncate">Hassle-Free Policy</p>
               </div>
             </div>
           </div>

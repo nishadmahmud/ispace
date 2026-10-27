@@ -9,6 +9,7 @@ export function StoreProvider({ children }) {
   const [wishlist, setWishlist] = useState([]);
   const [compare, setCompare] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [toasts, setToasts] = useState([]);
   const [mounted, setMounted] = useState(false);
 
@@ -172,6 +173,8 @@ export function StoreProvider({ children }) {
         clearCart,
         isCartOpen,
         setIsCartOpen,
+        isMobileMenuOpen,
+        setIsMobileMenuOpen,
         wishlist,
         toggleWishlist,
         isInWishlist,

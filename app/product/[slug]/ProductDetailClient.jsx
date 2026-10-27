@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
@@ -42,6 +42,19 @@ export default function ProductDetailClient({ product, relatedProducts }) {
   const [activeTab, setActiveTab] = useState("specs");
   const [selectedEmiBank, setSelectedEmiBank] = useState(emiBanks[0].id);
   const [selectedEmiMonths, setSelectedEmiMonths] = useState(12);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  const buyBoxRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (buyBoxRef.current) {
+        const rect = buyBoxRef.current.getBoundingClientRect();
+        setShowStickyBar(rect.bottom < 0);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const isFavorited = isInWishlist(product.id);
   const isCompared = isInCompare(product.id);
@@ -337,10 +350,10 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           )}
 
           {/* Quantity & CTA Actions */}
-          <div className="pt-2 space-y-4">
-            <div className="flex items-center gap-3">
+          <div ref={buyBoxRef} className="pt-2 space-y-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
               {/* Quantity counter */}
-              <div className="flex items-center border border-gray-200 rounded-2xl bg-white p-1 shadow-2xs">
+              <div className="flex items-center justify-between sm:justify-start border border-gray-200 rounded-2xl bg-white p-1 shadow-2xs">
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                   className="p-2 text-gray-500 hover:text-black transition-colors"
@@ -358,21 +371,22 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 </button>
               </div>
 
-              {/* Add to Bag */}
-              <button
-                onClick={handleAddToCart}
-                className="flex-1 py-3.5 px-6 rounded-2xl bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-900 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-xs"
-              >
-                <ShoppingBag className="w-4 h-4 text-[#ef233c]" /> Add to Bag
-              </button>
+              {/* Add to Bag & Buy Now */}
+              <div className="flex-1 grid grid-cols-2 gap-2">
+                <button
+                  onClick={handleAddToCart}
+                  className="py-3 sm:py-3.5 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-900 text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all shadow-xs truncate"
+                >
+                  <ShoppingBag className="w-4 h-4 text-[#ef233c] shrink-0" /> Add to Bag
+                </button>
 
-              {/* Buy Now Direct */}
-              <button
-                onClick={handleBuyNow}
-                className="flex-1 py-3.5 px-6 rounded-2xl bg-[#ef233c] hover:bg-[#d90429] text-white text-xs sm:text-sm font-black flex items-center justify-center gap-2 transition-all shadow-md shadow-red-500/25"
-              >
-                <Zap className="w-4 h-4" /> Buy Now
-              </button>
+                <button
+                  onClick={handleBuyNow}
+                  className="py-3 sm:py-3.5 px-3 rounded-2xl bg-[#ef233c] hover:bg-[#d90429] text-white text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 transition-all shadow-md shadow-red-500/25 truncate"
+                >
+                  <Zap className="w-4 h-4 shrink-0" /> Buy Now
+                </button>
+              </div>
             </div>
 
             {/* Express Hotline info */}
@@ -548,13 +562,48 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           <h2 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight mb-6">
             Recommended With This Device
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {relatedProducts.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>
         </div>
       )}
+
+      {/* Sticky Mobile Purchase Bar (Appears when scrolled past the main buy box) */}
+      <div
+        className={`lg:hidden fixed bottom-15 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-gray-200 px-3.5 py-2.5 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] flex items-center justify-between gap-3 transition-transform duration-300 ${
+          showStickyBar ? "translate-y-0" : "translate-y-full pointer-events-none"
+        }`}
+      >
+        <div className="flex items-center gap-2.5 min-w-0">
+          <img
+            src={product.images[0]}
+            alt={product.name}
+            className="w-10 h-10 object-cover rounded-lg bg-gray-50 border border-gray-200 shrink-0"
+          />
+          <div className="min-w-0">
+            <p className="text-xs font-bold text-gray-900 truncate">{product.name}</p>
+            <p className="text-xs font-black text-[#ef233c]">{formatBDT(currentPrice)}</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button
+            onClick={handleAddToCart}
+            className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-900 transition-all shadow-2xs"
+            title="Add to Bag"
+            aria-label="Add to Bag"
+          >
+            <ShoppingBag className="w-4 h-4 text-[#ef233c]" />
+          </button>
+          <button
+            onClick={handleBuyNow}
+            className="px-4 py-2.5 rounded-xl bg-[#ef233c] hover:bg-[#d90429] text-white text-xs font-black flex items-center gap-1.5 transition-all shadow-xs"
+          >
+            <Zap className="w-3.5 h-3.5" /> Buy Now
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

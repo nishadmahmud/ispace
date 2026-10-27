@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/common/Logo";
 import { useStore } from "@/context/StoreContext";
 import { products, categories } from "@/data/products";
@@ -25,13 +25,22 @@ import {
 
 export default function Header() {
   const pathname = usePathname();
-  const { cartCount, cartTotal, setIsCartOpen, wishlist, compare } = useStore();
+  const router = useRouter();
+  const { cartCount, cartTotal, setIsCartOpen, wishlist, compare, setIsMobileMenuOpen } = useStore();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const searchRef = useRef(null);
+  const mobileSearchRef = useRef(null);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      setIsSearchFocused(false);
+      router.push(`/shop?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   useEffect(() => {
     if (!searchQuery.trim()) {
@@ -50,7 +59,9 @@ export default function Header() {
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
+      const outsideDesktop = searchRef.current && !searchRef.current.contains(event.target);
+      const outsideMobile = mobileSearchRef.current && !mobileSearchRef.current.contains(event.target);
+      if (outsideDesktop && (!mobileSearchRef.current || outsideMobile)) {
         setIsSearchFocused(false);
       }
     }
@@ -59,7 +70,6 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    setMobileMenuOpen(false);
     setIsSearchFocused(false);
   }, [pathname]);
 
@@ -122,8 +132,8 @@ export default function Header() {
         <div className="h-14 flex items-center justify-between gap-3 lg:gap-6">
           {/* Mobile Menu Button */}
           <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="lg:hidden p-1.5 text-gray-700 hover:text-black rounded-lg hover:bg-gray-100 transition-colors"
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="lg:hidden p-1.5 text-gray-700 hover:text-black rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
             aria-label="Open navigation menu"
           >
             <Menu className="w-5 h-5" />
@@ -136,7 +146,7 @@ export default function Header() {
 
           {/* Search Bar (Spans comfortably across the center) */}
           <div ref={searchRef} className="hidden md:flex flex-1 max-w-2xl lg:max-w-3xl mx-2 lg:mx-4 relative">
-            <div className="w-full relative">
+            <form onSubmit={handleSearchSubmit} className="w-full relative">
               <input
                 type="text"
                 value={searchQuery}
@@ -148,13 +158,14 @@ export default function Header() {
               <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               {searchQuery && (
                 <button
+                  type="button"
                   onClick={() => setSearchQuery("")}
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 text-[10px] bg-gray-200 rounded-full w-4 h-4 flex items-center justify-center cursor-pointer"
                 >
                   ✕
                 </button>
               )}
-            </div>
+            </form>
 
             {/* Live Autocomplete Dropdown */}
             {isSearchFocused && searchResults.length > 0 && (
@@ -254,17 +265,78 @@ export default function Header() {
         </div>
 
         {/* Mobile Search Input */}
-        <div className="md:hidden pb-2 pt-0.5">
-          <div className="relative">
+        <div ref={mobileSearchRef} className="md:hidden pb-2.5 pt-0.5 relative">
+          <form onSubmit={handleSearchSubmit} className="relative">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
               placeholder="Search tech & gadgets..."
-              className="w-full h-8.5 pl-9 pr-3 rounded-lg bg-gray-100 border border-gray-200 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-[#ef233c]"
+              className="w-full h-9 pl-9 pr-8 rounded-xl bg-gray-100 border border-gray-200 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-[#ef233c] shadow-2xs"
             />
             <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-          </div>
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 text-[10px] bg-gray-200 rounded-full w-4 h-4 flex items-center justify-center cursor-pointer"
+              >
+                ✕
+              </button>
+            )}
+          </form>
+
+          {/* Mobile Live Autocomplete Dropdown */}
+          {isSearchFocused && searchResults.length > 0 && (
+            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden z-50">
+              <div className="p-2 border-b border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-wider px-3 bg-gray-50">
+                Matching Products
+              </div>
+              <div className="divide-y divide-gray-100 max-h-56 overflow-y-auto">
+                {searchResults.map((item) => (
+                  <Link
+                    key={item.id}
+                    href={`/product/${item.slug}`}
+                    onClick={() => {
+                      setIsSearchFocused(false);
+                      setSearchQuery("");
+                    }}
+                    className="p-2.5 flex items-center gap-3 hover:bg-gray-50 transition-colors"
+                  >
+                    <img
+                      src={item.images[0]}
+                      alt={item.name}
+                      className="w-10 h-10 object-cover rounded-md bg-gray-50 border border-gray-200 shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-bold text-gray-900 hover:text-red-600 truncate">
+                        {item.name}
+                      </p>
+                      <p className="text-[10px] text-gray-500 mt-0.5">
+                        {item.brand} • <span>{item.categoryName}</span>
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-xs font-black text-gray-900">
+                        {formatBDT(item.price)}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <Link
+                href={`/shop?q=${encodeURIComponent(searchQuery)}`}
+                onClick={() => {
+                  setIsSearchFocused(false);
+                  setSearchQuery("");
+                }}
+                className="block p-2 text-center text-xs font-bold text-red-600 hover:bg-red-50 transition-colors bg-gray-50 border-t border-gray-100"
+              >
+                View all results for &quot;{searchQuery}&quot; →
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 
@@ -318,89 +390,6 @@ export default function Header() {
           </ul>
         </div>
       </nav>
-
-      {/* Mobile Slide-out Menu */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-xs"
-            onClick={() => setMobileMenuOpen(false)}
-          />
-          <div className="fixed inset-y-0 left-0 w-4/5 max-w-xs bg-white border-r border-gray-200 p-5 text-gray-900 flex flex-col justify-between overflow-y-auto shadow-2xl">
-            <div>
-              <div className="flex items-center justify-between pb-4 border-b border-gray-200">
-                <Logo className="h-5.5" />
-                <button
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="p-1.5 text-gray-500 hover:text-black rounded-lg hover:bg-gray-100"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="py-4 space-y-1">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mb-2">
-                  Browse Categories
-                </p>
-                <Link
-                  href="/shop"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-xl text-sm font-bold text-gray-900 hover:bg-gray-100"
-                >
-                  All Tech & Gadgets
-                </Link>
-                {categories.map((cat) => (
-                  <Link
-                    key={cat.id}
-                    href={`/category/${cat.slug}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 rounded-xl text-sm text-gray-700 hover:text-red-600 hover:bg-gray-50"
-                  >
-                    {cat.name}
-                  </Link>
-                ))}
-              </div>
-
-              <div className="pt-4 border-t border-gray-200 space-y-1">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mb-2">
-                  Special Programs
-                </p>
-                <Link
-                  href="/emi"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-gray-700 font-semibold hover:bg-gray-50"
-                >
-                  <CreditCard className="w-4 h-4 text-gray-500" /> 0% EMI Facility
-                </Link>
-                <Link
-                  href="/exchange"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-gray-700 font-semibold hover:bg-gray-50"
-                >
-                  <RotateCcw className="w-4 h-4 text-gray-500" /> Trade-in & Exchange
-                </Link>
-                <Link
-                  href="/outlets"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-gray-700 font-semibold hover:bg-gray-50"
-                >
-                  <MapPin className="w-4 h-4 text-gray-500" /> Showroom Outlets
-                </Link>
-              </div>
-            </div>
-
-            <div className="pt-4 border-t border-gray-200">
-              <a
-                href="tel:+8800000000000"
-                className="flex items-center gap-2 p-3 rounded-xl bg-gray-50 border border-gray-200 text-xs font-bold text-gray-900 hover:bg-gray-100"
-              >
-                <Phone className="w-4 h-4 text-[#ef233c]" />
-                <span>Demo Hotline: +880 0000-000000</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
     </header>
   );
 }

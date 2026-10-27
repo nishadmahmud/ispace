@@ -61,11 +61,11 @@ export default function ComparePage() {
             <table className="w-full text-xs text-left border-collapse">
               <thead>
                 <tr className="border-b border-gray-200 bg-gray-50">
-                  <th className="p-4 w-44 font-black text-gray-500 uppercase tracking-wider">
+                  <th className="p-3 sm:p-4 w-32 sm:w-44 font-black text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-20 border-r border-gray-200 shadow-2xs">
                     Feature
                   </th>
                   {compare.map((item) => (
-                    <th key={item.id} className="p-4 min-w-[220px] max-w-[280px] align-top">
+                    <th key={item.id} className="p-3 sm:p-4 min-w-[200px] sm:min-w-[220px] max-w-[280px] align-top">
                       <div className="flex items-start justify-between gap-2 mb-3">
                         <span className="text-[10px] font-bold text-red-600 uppercase">
                           {item.brand}
@@ -82,7 +82,7 @@ export default function ComparePage() {
                       <img
                         src={item.images[0]}
                         alt={item.name}
-                        className="w-24 h-24 object-cover rounded-xl bg-gray-50 border border-gray-200 mb-2"
+                        className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl bg-gray-50 border border-gray-200 mb-2"
                       />
 
                       <Link
@@ -97,7 +97,7 @@ export default function ComparePage() {
                           {formatBDT(item.price)}
                         </span>
                         {item.regularPrice > item.price && (
-                          <span className="text-[11px] text-gray-400 line-through">
+                          <span className="text-[10px] sm:text-[11px] text-gray-400 line-through">
                             {formatBDT(item.regularPrice)}
                           </span>
                         )}
@@ -105,7 +105,7 @@ export default function ComparePage() {
 
                       <button
                         onClick={() => addToCart(item, {})}
-                        className="mt-3 w-full py-2 px-3 rounded-xl bg-[#ef233c] hover:bg-[#d90429] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                        className="mt-3 w-full py-2 px-3 rounded-xl bg-[#ef233c] hover:bg-[#d90429] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                       >
                         <ShoppingBag className="w-3.5 h-3.5" /> Add to Bag
                       </button>
@@ -115,33 +115,33 @@ export default function ComparePage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 <tr>
-                  <td className="p-4 font-bold text-gray-600 bg-gray-50">Category</td>
+                  <td className="p-3 sm:p-4 font-bold text-gray-600 bg-gray-50 sticky left-0 z-10 border-r border-gray-200 shadow-2xs">Category</td>
                   {compare.map((item) => (
-                    <td key={item.id} className="p-4 text-gray-800 font-medium">
+                    <td key={item.id} className="p-3 sm:p-4 text-gray-800 font-medium">
                       {item.categoryName}
                     </td>
                   ))}
                 </tr>
                 <tr>
-                  <td className="p-4 font-bold text-gray-600 bg-gray-50">Warranty</td>
+                  <td className="p-3 sm:p-4 font-bold text-gray-600 bg-gray-50 sticky left-0 z-10 border-r border-gray-200 shadow-2xs">Warranty</td>
                   {compare.map((item) => (
-                    <td key={item.id} className="p-4 text-gray-800">
+                    <td key={item.id} className="p-3 sm:p-4 text-gray-800">
                       {item.warranty}
                     </td>
                   ))}
                 </tr>
                 <tr>
-                  <td className="p-4 font-bold text-gray-600 bg-gray-50">Rating</td>
+                  <td className="p-3 sm:p-4 font-bold text-gray-600 bg-gray-50 sticky left-0 z-10 border-r border-gray-200 shadow-2xs">Rating</td>
                   {compare.map((item) => (
-                    <td key={item.id} className="p-4 text-amber-600 font-bold">
+                    <td key={item.id} className="p-3 sm:p-4 text-amber-600 font-bold">
                       ⭐ {item.rating} ({item.reviewCount} reviews)
                     </td>
                   ))}
                 </tr>
                 <tr>
-                  <td className="p-4 font-bold text-gray-600 bg-gray-50">Availability</td>
+                  <td className="p-3 sm:p-4 font-bold text-gray-600 bg-gray-50 sticky left-0 z-10 border-r border-gray-200 shadow-2xs">Availability</td>
                   {compare.map((item) => (
-                    <td key={item.id} className="p-4 text-emerald-700 font-bold">
+                    <td key={item.id} className="p-3 sm:p-4 text-emerald-700 font-bold">
                       {item.inStock ? "✓ In Stock" : "Out of Stock"}
                     </td>
                   ))}
@@ -150,9 +150,9 @@ export default function ComparePage() {
                 {["Display", "Chipset", "Processor", "Camera", "Battery", "OS", "Weight"].map(
                   (specKey) => (
                     <tr key={specKey}>
-                      <td className="p-4 font-bold text-gray-600 bg-gray-50">{specKey}</td>
+                      <td className="p-3 sm:p-4 font-bold text-gray-600 bg-gray-50 sticky left-0 z-10 border-r border-gray-200 shadow-2xs">{specKey}</td>
                       {compare.map((item) => (
-                        <td key={item.id} className="p-4 text-gray-700">
+                        <td key={item.id} className="p-3 sm:p-4 text-gray-700">
                           {item.specs?.[specKey] || item.specs?.[`${specKey} (Main)`] || "-"}
                         </td>
                       ))}
