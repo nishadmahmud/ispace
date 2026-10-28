@@ -29,7 +29,7 @@ export default async function ProductPage({ params }) {
     .slice(0, 4);
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-gray-900 py-8">
+    <div className="min-h-screen bg-[#0c0e12] text-[#e8eaed] py-8">
       <ProductDetailClient product={product} relatedProducts={relatedProducts} />
     </div>
   );

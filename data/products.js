@@ -4,63 +4,70 @@ export const categories = [
     name: "Phones & Tablets",
     slug: "phones",
     icon: "Smartphone",
+    image: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-phone-78cc7282-aeb7-4358-a1a3-f41ec2c80a1a.png",
     count: "45+ Models",
     description: "Official flagships, BTRC-approved models & international editions.",
-    banner: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=1200&auto=format&fit=crop"
+    banner: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-phone-78cc7282-aeb7-4358-a1a3-f41ec2c80a1a.png"
   },
   {
     id: "laptops",
     name: "Laptops & Mac",
     slug: "laptops",
     icon: "Laptop",
+    image: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-laptop-7ae13fd4-4518-4f35-8076-bc15c175fe7d.png",
     count: "30+ Models",
     description: "Apple MacBook M4/M3 series, Creator ultrabooks & Gaming beasts.",
-    banner: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop"
+    banner: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-laptop-7ae13fd4-4518-4f35-8076-bc15c175fe7d.png"
   },
   {
     id: "wearables",
     name: "Smartwatches",
     slug: "wearables",
     icon: "Watch",
+    image: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-watch-3b712e42-8e1a-4070-b2a3-332f6bcbcfe3.png",
     count: "25+ Models",
     description: "Apple Watch Ultra, Series 10, Galaxy Watch & fitness trackers.",
-    banner: "https://images.unsplash.com/photo-1510017803434-a899398421b3?q=80&w=1200&auto=format&fit=crop"
+    banner: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-watch-3b712e42-8e1a-4070-b2a3-332f6bcbcfe3.png"
   },
   {
     id: "audio",
     name: "Audio & Sound",
     slug: "audio",
     icon: "Headphones",
+    image: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-speaker-48d3e8a0-2e2d-4288-8b96-2dc080c65095.png",
     count: "40+ Models",
     description: "AirPods, Sony noise-canceling headphones, Marshall speakers & TWS.",
-    banner: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop"
+    banner: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-speaker-48d3e8a0-2e2d-4288-8b96-2dc080c65095.png"
   },
   {
     id: "accessories",
     name: "Accessories",
     slug: "accessories",
     icon: "Zap",
+    image: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-accessories-b27a218f-f3b5-449c-ba22-eebbff71908c.png",
     count: "80+ Items",
     description: "MagSafe chargers, Anker GaN power adapters, Spigen cases & cables.",
-    banner: "https://images.unsplash.com/photo-1622445262464-84b1456045b6?q=80&w=1200&auto=format&fit=crop"
+    banner: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-accessories-b27a218f-f3b5-449c-ba22-eebbff71908c.png"
   },
   {
     id: "gaming",
     name: "Gaming & Drones",
     slug: "gaming",
     icon: "Gamepad2",
+    image: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-gadget-bd23b472-2488-41c4-999e-07d3780d103f.png",
     count: "20+ Gadgets",
     description: "PlayStation 5 Slim, DJI 4K Drones, handheld consoles & gimbals.",
-    banner: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=1200&auto=format&fit=crop"
+    banner: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-gadget-bd23b472-2488-41c4-999e-07d3780d103f.png"
   },
   {
     id: "pre-owned",
     name: "Certified Pre-Owned",
     slug: "pre-owned",
     icon: "RotateCcw",
+    image: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-tablet-099fbcd0-5c29-4abf-92fc-0c950db9217e.png",
     count: "50+ Inspected",
     description: "iSPACE Recell certified Grade A+ devices with 7-day replacement.",
-    banner: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?q=80&w=1200&auto=format&fit=crop"
+    banner: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-tablet-099fbcd0-5c29-4abf-92fc-0c950db9217e.png"
   }
 ];
 
@@ -68,13 +75,13 @@ export const products = [
   // PHONES
   {
     id: "iphone-16-pro-max",
-    name: "Apple iPhone 16 Pro Max",
+    name: "Apple iPhone 17 Pro Max",
     slug: "iphone-16-pro-max",
     brand: "Apple",
     category: "phones",
     categoryName: "Phones & Tablets",
-    price: 169999,
-    regularPrice: 184999,
+    price: 149990,
+    regularPrice: 264990,
     badge: "Official BTRC Available",
     rating: 4.95,
     reviewCount: 168,
@@ -82,13 +89,12 @@ export const products = [
     stockCount: 12,
     warranty: "1 Year Official Apple Warranty + 7 Days Replacement",
     isFlashDeal: true,
-    flashDiscount: "8% OFF",
+    flashDiscount: "43% OFF",
     featured: true,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/iphone-18-pro-max-burgundy-760c543f-6b46-4110-9172-6e22abf92f1f.png",
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/iphone-18-pro-max-glacier-42997c16-d21b-4695-80e0-ba0512072af7.png"
     ],
     colors: [
       { name: "Desert Titanium", hex: "#bfa38a" },
@@ -128,13 +134,13 @@ export const products = [
   },
   {
     id: "iphone-16",
-    name: "Apple iPhone 16",
+    name: "Apple iPhone 17 Pro",
     slug: "iphone-16",
     brand: "Apple",
     category: "phones",
     categoryName: "Phones & Tablets",
-    price: 108999,
-    regularPrice: 119999,
+    price: 146990,
+    regularPrice: 239990,
     badge: "Hot Deal",
     rating: 4.88,
     reviewCount: 94,
@@ -145,8 +151,8 @@ export const products = [
     featured: true,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/63419/iPhone-17-Pro-Price-in-Bangladesh-Deep-Blue.jpg",
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/iphone-duo-star-white-5690403f-4466-4ef8-9c5a-13b85601778d.png"
     ],
     colors: [
       { name: "Ultramarine", hex: "#4b6cc1" },
@@ -184,13 +190,13 @@ export const products = [
   },
   {
     id: "samsung-galaxy-s25-ultra",
-    name: "Samsung Galaxy S25 Ultra 5G",
+    name: "Samsung Galaxy S26 Ultra 5G",
     slug: "samsung-galaxy-s25-ultra",
     brand: "Samsung",
     category: "phones",
     categoryName: "Phones & Tablets",
-    price: 154999,
-    regularPrice: 169999,
+    price: 164990,
+    regularPrice: 189990,
     badge: "Pre-Order Available",
     rating: 4.92,
     reviewCount: 78,
@@ -202,8 +208,8 @@ export const products = [
     featured: true,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/98841/Samsung-Galaxy-S26-Ultra-5G-price-in-bangladesh-(1).jpg",
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/99998/Samsung-Galaxy-S26-price-in-bangladesh-(2).jpg"
     ],
     colors: [
       { name: "Titanium Silver Blue", hex: "#8ea4b8" },
@@ -255,8 +261,7 @@ export const products = [
     featured: false,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02560?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/62508/Samsung-Galaxy-S25-FE-price-in-bangladesh-Icyblue.jpg"
     ],
     colors: [
       { name: "Obsidian", hex: "#1f2022" },
@@ -310,8 +315,7 @@ export const products = [
     featured: true,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/118809/Apple-MacBook-Air-M5-13-Inch-10-Core-CPU-8-Core-GPU-price-in-bangladesh.jpg"
     ],
     colors: [
       { name: "Space Black", hex: "#1c1d1f" },
@@ -342,25 +346,25 @@ export const products = [
   },
   {
     id: "macbook-air-13-m3",
-    name: "Apple MacBook Air 13\" (M3 Chip)",
+    name: "Apple MacBook Air 13\" (M5 Chip)",
     slug: "macbook-air-13-m3",
     brand: "Apple",
     category: "laptops",
     categoryName: "Laptops & Mac",
-    price: 132000,
-    regularPrice: 145000,
+    price: 152990,
+    regularPrice: 219990,
     badge: "Best Student Laptop",
     rating: 4.91,
     reviewCount: 110,
     inStock: true,
     stockCount: 15,
     warranty: "1 Year Official Apple Warranty",
-    isFlashDeal: false,
+    isFlashDeal: true,
+    flashDiscount: "30% OFF",
     featured: true,
     isNew: false,
     images: [
-      "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/118809/Apple-MacBook-Air-M5-13-Inch-10-Core-CPU-8-Core-GPU-price-in-bangladesh.jpg"
     ],
     colors: [
       { name: "Midnight", hex: "#1e2430" },
@@ -408,7 +412,7 @@ export const products = [
     featured: false,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-laptop-7ae13fd4-4518-4f35-8076-bc15c175fe7d.png"
     ],
     colors: [
       { name: "Eclipse Gray", hex: "#3a3c40" },
@@ -455,8 +459,7 @@ export const products = [
     featured: true,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1510017803434-a899398421b3?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-watch-3b712e42-8e1a-4070-b2a3-332f6bcbcfe3.png"
     ],
     colors: [
       { name: "Black Titanium (Ocean Band)", hex: "#1f2124" },
@@ -502,7 +505,7 @@ export const products = [
     featured: true,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-watch-3b712e42-8e1a-4070-b2a3-332f6bcbcfe3.png"
     ],
     colors: [
       { name: "Jet Black (Aluminum)", hex: "#111215" },
@@ -548,7 +551,7 @@ export const products = [
     featured: false,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-watch-3b712e42-8e1a-4070-b2a3-332f6bcbcfe3.png"
     ],
     colors: [
       { name: "Green", hex: "#3d4b3b" },
@@ -575,7 +578,7 @@ export const products = [
   // AUDIO & SOUND
   {
     id: "airpods-pro-2-usb-c",
-    name: "Apple AirPods Pro 2 (USB-C)",
+    name: "Apple AirPods Pro (Latest)",
     slug: "airpods-pro-2-usb-c",
     brand: "Apple",
     category: "audio",
@@ -593,8 +596,7 @@ export const products = [
     featured: true,
     isNew: false,
     images: [
-      "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/main-image-12001263-2026-09-05t204540551-33b5a647-7aff-4a33-a03b-ea308b46959c.jpg"
     ],
     colors: [
       { name: "White", hex: "#ffffff" }
@@ -636,7 +638,7 @@ export const products = [
     featured: true,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/main-image-12001263-2026-09-05t204540551-b72c89ca-a0b4-4749-a97a-30e303575cf0.jpg"
     ],
     colors: [
       { name: "Midnight", hex: "#1f232b" },
@@ -682,7 +684,7 @@ export const products = [
     featured: true,
     isNew: false,
     images: [
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-speaker-48d3e8a0-2e2d-4288-8b96-2dc080c65095.png"
     ],
     colors: [
       { name: "Black", hex: "#1a1a1a" },
@@ -725,7 +727,7 @@ export const products = [
     featured: false,
     isNew: false,
     images: [
-      "https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-speaker-48d3e8a0-2e2d-4288-8b96-2dc080c65095.png"
     ],
     colors: [
       { name: "Black and Brass", hex: "#1e1e1e" },
@@ -768,7 +770,7 @@ export const products = [
     featured: true,
     isNew: false,
     images: [
-      "https://images.unsplash.com/photo-1622445262464-84b1456045b6?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-accessories-b27a218f-f3b5-449c-ba22-eebbff71908c.png"
     ],
     colors: [
       { name: "White", hex: "#ffffff" }
@@ -810,7 +812,7 @@ export const products = [
     featured: false,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-accessories-b27a218f-f3b5-449c-ba22-eebbff71908c.png"
     ],
     colors: [
       { name: "Space Gray", hex: "#4b4f58" }
@@ -850,7 +852,7 @@ export const products = [
     featured: false,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1622445262464-84b1456045b6?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-accessories-b27a218f-f3b5-449c-ba22-eebbff71908c.png"
     ],
     colors: [
       { name: "Silver Braided Cable", hex: "#e5e5e7" }
@@ -893,7 +895,7 @@ export const products = [
     featured: true,
     isNew: false,
     images: [
-      "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-gadget-bd23b472-2488-41c4-999e-07d3780d103f.png"
     ],
     colors: [
       { name: "Glacier White", hex: "#f0f0f0" }
@@ -935,7 +937,7 @@ export const products = [
     featured: true,
     isNew: true,
     images: [
-      "https://images.unsplash.com/photo-1527698266440-12104e498b76?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-gadget-bd23b472-2488-41c4-999e-07d3780d103f.png"
     ],
     colors: [
       { name: "Matte Black", hex: "#222222" }
@@ -957,6 +959,310 @@ export const products = [
       "Video": "Up to 4K/120fps, 10-bit D-Log M and HLG",
       "Stabilization": "3-Axis Mechanical Gimbal",
       "Weight": "179 grams"
+    }
+  },
+
+    {
+    "id": "oneplus-15-5g",
+    "name": "OnePlus 15 5G",
+    "slug": "oneplus-15-5g",
+    "brand": "OnePlus",
+    "category": "phones",
+    "categoryName": "Phones & Tablets",
+    "price": 85555,
+    "regularPrice": 99990,
+    "badge": "Top Selling",
+    "rating": 4.82,
+    "reviewCount": 94,
+    "inStock": true,
+    "stockCount": 18,
+    "warranty": "1 Year Official Warranty + 7 Days Replacement",
+    "isFlashDeal": true,
+    "flashDiscount": "14% OFF",
+    "featured": true,
+    "isNew": true,
+    "images": [
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/73791/OnePlus-15-Price-in-Bangladesh--(1).jpg"
+    ],
+    "colors": [
+      {
+        "name": "Frosted Black",
+        "hex": "#1a1a1a"
+      },
+      {
+        "name": "Arctic White",
+        "hex": "#f5f5f5"
+      }
+    ],
+    "storage": [
+      {
+        "size": "256GB",
+        "priceOffset": 0
+      },
+      {
+        "size": "512GB",
+        "priceOffset": 12000
+      }
+    ],
+    "simOptions": [
+      "Dual Nano SIM",
+      "Nano + eSIM"
+    ],
+    "description": "Flagship Snapdragon performance with a bright AMOLED display and ultra-fast charging — built for everyday power users in Bangladesh.",
+    "keyFeatures": [
+      "Flagship-grade chipset for smooth multitasking and gaming",
+      "High-refresh AMOLED display with vivid HDR",
+      "Ultra-fast charging for all-day battery recovery",
+      "Clean OxygenOS experience with timely updates"
+    ],
+    "specs": {
+      "Display": "6.8-inch AMOLED 120Hz",
+      "Chipset": "Snapdragon Flagship",
+      "Battery": "Fast Charge supported",
+      "Connectivity": "5G Dual SIM"
+    }
+  },
+
+  {
+    "id": "vivo-x300-pro",
+    "name": "vivo X300 Pro 5G",
+    "slug": "vivo-x300-pro",
+    "brand": "vivo",
+    "category": "phones",
+    "categoryName": "Phones & Tablets",
+    "price": 99990,
+    "regularPrice": 109990,
+    "badge": "New Arrival",
+    "rating": 4.78,
+    "reviewCount": 61,
+    "inStock": true,
+    "stockCount": 11,
+    "warranty": "1 Year Official Warranty + 7 Days Replacement",
+    "isFlashDeal": true,
+    "flashDiscount": "9% OFF",
+    "featured": true,
+    "isNew": true,
+    "images": [
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/72242/vivo-X300-Pro-Price-in-Bangladesh--(2).jpg"
+    ],
+    "colors": [
+      {
+        "name": "Titanium Grey",
+        "hex": "#6b6e73"
+      },
+      {
+        "name": "Cosmic Blue",
+        "hex": "#2c3e6b"
+      }
+    ],
+    "storage": [
+      {
+        "size": "256GB",
+        "priceOffset": 0
+      },
+      {
+        "size": "512GB",
+        "priceOffset": 10000
+      }
+    ],
+    "simOptions": [
+      "Dual Nano SIM"
+    ],
+    "description": "Pro-grade camera phone with ZEISS-tuned imaging and a bright curved display — ideal for content creators.",
+    "keyFeatures": [
+      "Professional multi-lens camera system",
+      "Bright high-refresh AMOLED panel",
+      "Long-lasting battery with fast charging",
+      "Premium glass-and-metal design"
+    ],
+    "specs": {
+      "Display": "AMOLED 120Hz",
+      "Camera": "Pro multi-lens",
+      "Battery": "Fast Charge",
+      "Network": "5G"
+    }
+  },
+
+  {
+    "id": "ipad-11th-gen",
+    "name": "Apple iPad 11th Generation",
+    "slug": "ipad-11th-gen",
+    "brand": "Apple",
+    "category": "phones",
+    "categoryName": "Phones & Tablets",
+    "price": 55990,
+    "regularPrice": 61990,
+    "badge": "Hot Product",
+    "rating": 4.88,
+    "reviewCount": 112,
+    "inStock": true,
+    "stockCount": 22,
+    "warranty": "1 Year Official Apple Warranty",
+    "isFlashDeal": false,
+    "featured": true,
+    "isNew": true,
+    "images": [
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/41382/iPad-11th-gen-price-in-bangladesh-(2).jpg"
+    ],
+    "colors": [
+      {
+        "name": "Silver",
+        "hex": "#e3e4e5"
+      },
+      {
+        "name": "Blue",
+        "hex": "#7a9cb8"
+      },
+      {
+        "name": "Pink",
+        "hex": "#e8a7b8"
+      },
+      {
+        "name": "Yellow",
+        "hex": "#f0d56a"
+      }
+    ],
+    "storage": [
+      {
+        "size": "128GB",
+        "priceOffset": 0
+      },
+      {
+        "size": "256GB",
+        "priceOffset": 12000
+      }
+    ],
+    "simOptions": [
+      "Wi-Fi",
+      "Wi-Fi + Cellular"
+    ],
+    "description": "The most accessible iPad with a Liquid Retina display, Apple Pencil support, and all-day battery for students and creators.",
+    "keyFeatures": [
+      "Liquid Retina display with True Tone",
+      "Apple Pencil and Magic Keyboard compatible",
+      "All-day battery life",
+      "Landscape front camera for video calls"
+    ],
+    "specs": {
+      "Display": "11-inch Liquid Retina",
+      "Chip": "Apple Silicon",
+      "Camera": "Landscape 12MP Ultra Wide front",
+      "Storage": "128GB / 256GB"
+    }
+  },
+
+  {
+    "id": "honor-400",
+    "name": "Honor 400 (Official)",
+    "slug": "honor-400",
+    "brand": "Honor",
+    "category": "phones",
+    "categoryName": "Phones & Tablets",
+    "price": 34990,
+    "regularPrice": 39990,
+    "badge": "Best Value",
+    "rating": 4.65,
+    "reviewCount": 48,
+    "inStock": true,
+    "stockCount": 30,
+    "warranty": "1 Year Official Warranty",
+    "isFlashDeal": false,
+    "featured": false,
+    "isNew": true,
+    "images": [
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/honor-400-df404c8a-6bc3-4955-b5a1-c552ef205ccf.png"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1a1a1a"
+      },
+      {
+        "name": "Silver",
+        "hex": "#c8c8c8"
+      }
+    ],
+    "storage": [
+      {
+        "size": "256GB",
+        "priceOffset": 0
+      }
+    ],
+    "simOptions": [
+      "Dual Nano SIM"
+    ],
+    "description": "Official Honor mid-ranger with a bright display, solid cameras, and dependable all-day performance.",
+    "keyFeatures": [
+      "Official BD warranty stock",
+      "Bright AMOLED display",
+      "Capable multi-camera setup",
+      "Fast charging support"
+    ],
+    "specs": {
+      "Display": "AMOLED",
+      "Network": "5G / 4G",
+      "Storage": "256GB",
+      "Warranty": "Official"
+    }
+  },
+
+  {
+    "id": "redmi-note-15-5g",
+    "name": "Redmi Note 15 5G",
+    "slug": "redmi-note-15-5g",
+    "brand": "Xiaomi",
+    "category": "phones",
+    "categoryName": "Phones & Tablets",
+    "price": 28990,
+    "regularPrice": 32990,
+    "badge": "Popular",
+    "rating": 4.7,
+    "reviewCount": 203,
+    "inStock": true,
+    "stockCount": 40,
+    "warranty": "1 Year Official Warranty",
+    "isFlashDeal": true,
+    "flashDiscount": "12% OFF",
+    "featured": true,
+    "isNew": true,
+    "images": [
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/59046/Redmi-Note-15-5G-price-in-Bangladesh-Star-White.jpg"
+    ],
+    "colors": [
+      {
+        "name": "Star White",
+        "hex": "#f4f4f4"
+      },
+      {
+        "name": "Midnight Black",
+        "hex": "#1c1c1c"
+      }
+    ],
+    "storage": [
+      {
+        "size": "128GB",
+        "priceOffset": 0
+      },
+      {
+        "size": "256GB",
+        "priceOffset": 4000
+      }
+    ],
+    "simOptions": [
+      "Dual Nano SIM"
+    ],
+    "description": "Best-selling Redmi Note with 5G, a large high-refresh display, and a battery that lasts through heavy days.",
+    "keyFeatures": [
+      "5G connectivity",
+      "High-refresh display",
+      "Large battery with fast charge",
+      "Clean MIUI experience"
+    ],
+    "specs": {
+      "Display": "AMOLED 120Hz",
+      "Network": "5G Dual SIM",
+      "Battery": "Large capacity + fast charge",
+      "Brand": "Xiaomi / Redmi"
     }
   },
 
@@ -982,8 +1288,7 @@ export const products = [
     isNew: false,
     isPreOwned: true,
     images: [
-      "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/63447/iPhone-17-Pro-Max-Price-in-Bangladesh-Cosmic-Orange.jpg"
     ],
     colors: [
       { name: "Deep Purple", hex: "#4d4157" },
@@ -1034,7 +1339,7 @@ export const products = [
     isNew: false,
     isPreOwned: true,
     images: [
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=900&auto=format&fit=crop"
+      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/118809/Apple-MacBook-Air-M5-13-Inch-10-Core-CPU-8-Core-GPU-price-in-bangladesh.jpg"
     ],
     colors: [
       { name: "Space Gray", hex: "#5b5d62" },
@@ -1061,9 +1366,13 @@ export const products = [
 ];
 
 export const brands = [
-  { name: "Apple", logoText: " Apple", count: 18 },
-  { name: "Samsung", logoText: "SAMSUNG", count: 12 },
+  { name: "Apple", logoText: " Apple", count: 22 },
+  { name: "Samsung", logoText: "SAMSUNG", count: 14 },
   { name: "Google", logoText: "Google", count: 6 },
+  { name: "OnePlus", logoText: "OnePlus", count: 8 },
+  { name: "Xiaomi", logoText: "Xiaomi", count: 11 },
+  { name: "vivo", logoText: "vivo", count: 7 },
+  { name: "Honor", logoText: "Honor", count: 5 },
   { name: "Sony", logoText: "SONY", count: 9 },
   { name: "Anker", logoText: "ANKER", count: 14 },
   { name: "DJI", logoText: "DJI", count: 5 },

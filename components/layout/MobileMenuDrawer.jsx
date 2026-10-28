@@ -49,14 +49,14 @@ export default function MobileMenuDrawer() {
       />
 
       {/* Slide-out Panel */}
-      <div className="fixed inset-y-0 left-0 w-4/5 max-w-xs bg-white border-r border-gray-200 p-5 text-gray-900 flex flex-col justify-between overflow-y-auto shadow-2xl z-10 animate-in slide-in-from-left duration-200">
+      <div className="fixed inset-y-0 left-0 w-4/5 max-w-xs bg-[#14171c] border-r border-[#2a2e37] p-5 text-[#e8eaed] flex flex-col justify-between overflow-y-auto shadow-2xl z-10 animate-in slide-in-from-left duration-200">
         <div>
           {/* Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-gray-200">
+          <div className="flex items-center justify-between pb-4 border-b border-[#2a2e37]">
             <Logo className="h-5.5" />
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="p-1.5 text-gray-500 hover:text-black rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+              className="p-1.5 text-[#6b7280] hover:text-[#e8eaed] rounded-lg hover:bg-[#1c1f26] transition-colors cursor-pointer"
               aria-label="Close navigation menu"
             >
               <X className="w-5 h-5" />
@@ -65,13 +65,13 @@ export default function MobileMenuDrawer() {
 
           {/* Browse Categories */}
           <div className="py-4 space-y-1">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mb-2">
+            <p className="text-[10px] font-bold text-[#6b7280] uppercase tracking-widest px-3 mb-2">
               Browse Categories
             </p>
             <Link
               href="/shop"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-xl text-sm font-bold text-gray-900 hover:bg-gray-100"
+              className="block px-3 py-2 rounded-xl text-sm font-bold text-[#e8eaed] hover:bg-[#1c1f26]"
             >
               All Tech & Gadgets
             </Link>
@@ -80,7 +80,7 @@ export default function MobileMenuDrawer() {
                 key={cat.id}
                 href={`/category/${cat.slug}`}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-sm text-gray-700 hover:text-red-600 hover:bg-gray-50 transition-colors"
+                className="block px-3 py-2 rounded-xl text-sm text-[#9aa3af] hover:text-[#c45c5c] hover:bg-[#1c1f26] transition-colors"
               >
                 {cat.name}
               </Link>
@@ -88,55 +88,55 @@ export default function MobileMenuDrawer() {
           </div>
 
           {/* Special Programs */}
-          <div className="pt-4 border-t border-gray-200 space-y-1">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mb-2">
+          <div className="pt-4 border-t border-[#2a2e37] space-y-1">
+            <p className="text-[10px] font-bold text-[#6b7280] uppercase tracking-widest px-3 mb-2">
               Special Programs
             </p>
             <Link
               href="/shop?deal=flash"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-[#ef233c] font-bold hover:bg-red-50 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-[#c45c5c] font-bold hover:bg-[#c45c5c]/10 transition-colors"
             >
-              <Flame className="w-4 h-4 text-[#ef233c]" /> Hot Flash Deals
+              <Flame className="w-4 h-4 text-[#c45c5c]" /> Hot Flash Deals
             </Link>
             <Link
               href="/emi"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-[#9aa3af] font-semibold hover:bg-[#1c1f26] transition-colors"
             >
-              <CreditCard className="w-4 h-4 text-gray-500" /> 0% EMI Facility
+              <CreditCard className="w-4 h-4 text-[#6b7280]" /> 0% EMI Facility
             </Link>
             <Link
               href="/exchange"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-[#9aa3af] font-semibold hover:bg-[#1c1f26] transition-colors"
             >
-              <RotateCcw className="w-4 h-4 text-gray-500" /> Trade-in & Exchange
+              <RotateCcw className="w-4 h-4 text-[#6b7280]" /> Trade-in & Exchange
             </Link>
             <Link
               href="/outlets"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-[#9aa3af] font-semibold hover:bg-[#1c1f26] transition-colors"
             >
-              <MapPin className="w-4 h-4 text-gray-500" /> Showroom Outlets
+              <MapPin className="w-4 h-4 text-[#6b7280]" /> Showroom Outlets
             </Link>
             <Link
               href="/track-order"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-[#9aa3af] font-semibold hover:bg-[#1c1f26] transition-colors"
             >
-              <Truck className="w-4 h-4 text-gray-500" /> Track Order Status
+              <Truck className="w-4 h-4 text-[#6b7280]" /> Track Order Status
             </Link>
           </div>
         </div>
 
         {/* Footer Demo Hotline */}
-        <div className="pt-4 border-t border-gray-200">
+        <div className="pt-4 border-t border-[#2a2e37]">
           <a
             href="tel:+8800000000000"
-            className="flex items-center gap-2 p-3 rounded-xl bg-gray-50 border border-gray-200 text-xs font-bold text-gray-900 hover:bg-gray-100 transition-colors"
+            className="flex items-center gap-2 p-3 rounded-xl bg-[#1c1f26] border border-[#2a2e37] text-xs font-bold text-[#e8eaed] hover:bg-[#1c1f26] transition-colors"
           >
-            <Phone className="w-4 h-4 text-[#ef233c]" />
+            <Phone className="w-4 h-4 text-[#c45c5c]" />
             <span>Demo Hotline: +880 0000-000000</span>
           </a>
         </div>

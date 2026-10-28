@@ -39,34 +39,34 @@ export default function CartPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-gray-900 py-10">
+    <div className="min-h-screen bg-[#0c0e12] text-[#e8eaed] py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs text-gray-500 mb-6 font-medium">
-          <Link href="/" className="hover:text-black transition-colors">
+        <div className="flex items-center gap-2 text-xs text-[#6b7280] mb-6 font-medium">
+          <Link href="/" className="hover:text-[#e8eaed] transition-colors">
             Home
           </Link>
           <span>/</span>
-          <span className="text-gray-900 font-bold">Shopping Bag ({cartCount})</span>
+          <span className="text-[#e8eaed] font-bold">Shopping Bag ({cartCount})</span>
         </div>
 
-        <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-8">
+        <h1 className="text-3xl font-black text-[#e8eaed] tracking-tight mb-8">
           Review Your Shopping Bag
         </h1>
 
         {cart.length === 0 ? (
-          <div className="rounded-3xl bg-white border border-gray-200 p-12 text-center max-w-xl mx-auto space-y-4 shadow-xs">
-            <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 mx-auto">
+          <div className="rounded-3xl bg-[#14171c] border border-[#2a2e37] p-12 text-center max-w-xl mx-auto space-y-4 shadow-xs">
+            <div className="w-20 h-20 rounded-full bg-[#1c1f26] flex items-center justify-center text-[#6b7280] mx-auto">
               <ShoppingBag className="w-10 h-10" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Your bag is currently empty</h2>
-            <p className="text-xs text-gray-500">
+            <h2 className="text-xl font-bold text-[#e8eaed]">Your bag is currently empty</h2>
+            <p className="text-xs text-[#6b7280]">
               Looks like you haven&apos;t added any gadgets to your bag yet. Explore our genuine Apple iPhones, MacBooks, and smart accessories.
             </p>
             <div className="pt-2">
               <Link
                 href="/shop"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#ef233c] hover:bg-[#d90429] text-white text-xs font-bold transition-all shadow-md shadow-red-500/20"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#c45c5c] hover:bg-[#a84848] text-white text-xs font-bold transition-all shadow-md shadow-black/40"
               >
                 Browse All Products <ArrowRight className="w-4 h-4" />
               </Link>
@@ -76,7 +76,7 @@ export default function CartPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Cart Items List (8 cols) */}
             <div className="lg:col-span-8 space-y-4">
-              <div className="rounded-3xl bg-white border border-gray-200 overflow-hidden divide-y divide-gray-100 shadow-xs">
+              <div className="rounded-3xl bg-[#14171c] border border-[#2a2e37] overflow-hidden divide-y divide-[#2a2e37] shadow-xs">
                 {cart.map((item) => (
                   <div
                     key={item.cartKey}
@@ -86,28 +86,28 @@ export default function CartPage() {
                       <img
                         src={item.product.images[0]}
                         alt={item.product.name}
-                        className="w-20 h-20 object-cover rounded-2xl bg-gray-50 border border-gray-200 shrink-0"
+                        className="w-20 h-20 object-cover rounded-2xl bg-[#1c1f26] border border-[#2a2e37] shrink-0"
                       />
                       <div>
                         <Link
                           href={`/product/${item.product.slug}`}
-                          className="font-bold text-sm text-gray-900 hover:text-red-600 transition-colors line-clamp-1"
+                          className="font-bold text-sm text-[#e8eaed] hover:text-[#c45c5c] transition-colors line-clamp-1"
                         >
                           {item.product.name}
                         </Link>
-                        <div className="flex flex-wrap items-center gap-2 mt-1 text-[11px] text-gray-500">
+                        <div className="flex flex-wrap items-center gap-2 mt-1 text-[11px] text-[#6b7280]">
                           {item.options.storage && (
-                            <span className="bg-gray-100 px-2 py-0.5 rounded text-gray-700 font-medium">
+                            <span className="bg-[#1c1f26] px-2 py-0.5 rounded text-[#9aa3af] font-medium">
                               Storage: {item.options.storage}
                             </span>
                           )}
                           {item.options.color && (
-                            <span className="bg-gray-100 px-2 py-0.5 rounded text-gray-700 font-medium">
+                            <span className="bg-[#1c1f26] px-2 py-0.5 rounded text-[#9aa3af] font-medium">
                               Color: {item.options.color}
                             </span>
                           )}
                         </div>
-                        <p className="text-xs font-black text-gray-900 mt-1">
+                        <p className="text-xs font-black text-[#e8eaed] mt-1">
                           {formatBDT(item.unitPrice)}
                         </p>
                       </div>
@@ -115,19 +115,19 @@ export default function CartPage() {
 
                     <div className="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto">
                       {/* Quantity Controls */}
-                      <div className="flex items-center border border-gray-200 rounded-xl bg-white p-1">
+                      <div className="flex items-center border border-[#2a2e37] rounded-xl bg-[#14171c] p-1">
                         <button
                           onClick={() => updateCartQty(item.cartKey, item.qty - 1)}
-                          className="p-1.5 text-gray-500 hover:text-black transition-colors"
+                          className="p-1.5 text-[#6b7280] hover:text-[#e8eaed] transition-colors"
                         >
                           <Minus className="w-3.5 h-3.5" />
                         </button>
-                        <span className="w-8 text-center text-xs font-bold text-gray-900">
+                        <span className="w-8 text-center text-xs font-bold text-[#e8eaed]">
                           {item.qty}
                         </span>
                         <button
                           onClick={() => updateCartQty(item.cartKey, item.qty + 1)}
-                          className="p-1.5 text-gray-500 hover:text-black transition-colors"
+                          className="p-1.5 text-[#6b7280] hover:text-[#e8eaed] transition-colors"
                         >
                           <Plus className="w-3.5 h-3.5" />
                         </button>
@@ -135,7 +135,7 @@ export default function CartPage() {
 
                       {/* Total for item */}
                       <div className="text-right min-w-[90px]">
-                        <span className="text-sm font-black text-gray-900">
+                        <span className="text-sm font-black text-[#e8eaed]">
                           {formatBDT(item.unitPrice * item.qty)}
                         </span>
                       </div>
@@ -143,7 +143,7 @@ export default function CartPage() {
                       {/* Remove Button */}
                       <button
                         onClick={() => removeFromCart(item.cartKey)}
-                        className="text-gray-400 hover:text-red-600 p-2 transition-colors"
+                        className="text-[#6b7280] hover:text-[#c45c5c] p-2 transition-colors"
                         title="Remove from bag"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -156,13 +156,13 @@ export default function CartPage() {
               <div className="flex justify-between items-center pt-2">
                 <Link
                   href="/shop"
-                  className="inline-flex items-center gap-1.5 text-xs text-gray-600 hover:text-black font-bold"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#9aa3af] hover:text-[#e8eaed] font-bold"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" /> Continue Shopping
                 </Link>
                 <button
                   onClick={clearCart}
-                  className="text-xs text-gray-400 hover:text-red-600 transition-colors font-medium"
+                  className="text-xs text-[#6b7280] hover:text-[#c45c5c] transition-colors font-medium"
                 >
                   Clear Entire Bag
                 </button>
@@ -172,9 +172,9 @@ export default function CartPage() {
             {/* Order Summary & Coupon (4 cols) */}
             <div className="lg:col-span-4 space-y-6">
               {/* Coupon Form */}
-              <div className="rounded-3xl bg-white border border-gray-200 p-5 space-y-3 shadow-xs">
-                <h3 className="text-xs font-black text-gray-900 uppercase tracking-wider flex items-center gap-1.5">
-                  <Tag className="w-3.5 h-3.5 text-[#ef233c]" /> Have a Promo Code?
+              <div className="rounded-3xl bg-[#14171c] border border-[#2a2e37] p-5 space-y-3 shadow-xs">
+                <h3 className="text-xs font-black text-[#e8eaed] uppercase tracking-wider flex items-center gap-1.5">
+                  <Tag className="w-3.5 h-3.5 text-[#c45c5c]" /> Have a Promo Code?
                 </h3>
                 <form onSubmit={handleApplyCoupon} className="flex gap-2">
                   <input
@@ -182,102 +182,102 @@ export default function CartPage() {
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value)}
                     placeholder="Try 'ISPACE500'"
-                    className="flex-1 h-10 px-3 rounded-xl bg-gray-50 border border-gray-200 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-[#ef233c]"
+                    className="flex-1 h-10 px-3 rounded-xl bg-[#1c1f26] border border-[#2a2e37] text-xs text-[#e8eaed] placeholder-[#6b7280] focus:outline-none focus:bg-[#14171c] focus:border-[#c45c5c]"
                   />
                   <button
                     type="submit"
-                    className="px-4 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold text-gray-800 transition-colors border border-gray-200"
+                    className="px-4 h-10 rounded-xl bg-[#1c1f26] hover:bg-[#2a2e37] text-xs font-bold text-[#e8eaed] transition-colors border border-[#2a2e37]"
                   >
                     Apply
                   </button>
                 </form>
                 {appliedCoupon && (
-                  <p className="text-[11px] text-emerald-700 font-bold">
+                  <p className="text-[11px] text-emerald-400 font-bold">
                     ✓ Applied &quot;{appliedCoupon}&quot; (-৳500)
                   </p>
                 )}
               </div>
 
               {/* Shipping Estimator */}
-              <div className="rounded-3xl bg-white border border-gray-200 p-5 space-y-3 shadow-xs">
-                <h3 className="text-xs font-black text-gray-900 uppercase tracking-wider">
+              <div className="rounded-3xl bg-[#14171c] border border-[#2a2e37] p-5 space-y-3 shadow-xs">
+                <h3 className="text-xs font-black text-[#e8eaed] uppercase tracking-wider">
                   Shipping Destination
                 </h3>
                 <div className="space-y-2 text-xs">
-                  <label className="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-200 cursor-pointer">
+                  <label className="flex items-center justify-between p-3 rounded-xl bg-[#1c1f26] border border-[#2a2e37] cursor-pointer">
                     <div className="flex items-center gap-2">
                       <input
                         type="radio"
                         name="shipping"
                         checked={shippingMethod === "inside"}
                         onChange={() => setShippingMethod("inside")}
-                        className="accent-[#ef233c]"
+                        className="accent-[#c45c5c]"
                       />
-                      <span className="font-medium text-gray-800">Inside Dhaka (24 Hours)</span>
+                      <span className="font-medium text-[#e8eaed]">Inside Dhaka (24 Hours)</span>
                     </div>
-                    <span className="font-bold text-gray-900">৳60</span>
+                    <span className="font-bold text-[#e8eaed]">৳60</span>
                   </label>
-                  <label className="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-200 cursor-pointer">
+                  <label className="flex items-center justify-between p-3 rounded-xl bg-[#1c1f26] border border-[#2a2e37] cursor-pointer">
                     <div className="flex items-center gap-2">
                       <input
                         type="radio"
                         name="shipping"
                         checked={shippingMethod === "outside"}
                         onChange={() => setShippingMethod("outside")}
-                        className="accent-[#ef233c]"
+                        className="accent-[#c45c5c]"
                       />
-                      <span className="font-medium text-gray-800">Outside Dhaka (48 Hours)</span>
+                      <span className="font-medium text-[#e8eaed]">Outside Dhaka (48 Hours)</span>
                     </div>
-                    <span className="font-bold text-gray-900">৳120</span>
+                    <span className="font-bold text-[#e8eaed]">৳120</span>
                   </label>
-                  <label className="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-200 cursor-pointer">
+                  <label className="flex items-center justify-between p-3 rounded-xl bg-[#1c1f26] border border-[#2a2e37] cursor-pointer">
                     <div className="flex items-center gap-2">
                       <input
                         type="radio"
                         name="shipping"
                         checked={shippingMethod === "express"}
                         onChange={() => setShippingMethod("express")}
-                        className="accent-[#ef233c]"
+                        className="accent-[#c45c5c]"
                       />
-                      <span className="font-medium text-gray-800">Express Same-Day Dhaka</span>
+                      <span className="font-medium text-[#e8eaed]">Express Same-Day Dhaka</span>
                     </div>
-                    <span className="font-bold text-gray-900">৳150</span>
+                    <span className="font-bold text-[#e8eaed]">৳150</span>
                   </label>
                 </div>
               </div>
 
               {/* Summary Card */}
-              <div className="rounded-3xl bg-white border border-gray-200 p-5 space-y-4 shadow-xs">
-                <h3 className="text-sm font-black text-gray-900">Order Summary</h3>
-                <div className="space-y-2 text-xs divide-y divide-gray-100">
-                  <div className="flex justify-between text-gray-600 pb-2">
+              <div className="rounded-3xl bg-[#14171c] border border-[#2a2e37] p-5 space-y-4 shadow-xs">
+                <h3 className="text-sm font-black text-[#e8eaed]">Order Summary</h3>
+                <div className="space-y-2 text-xs divide-y divide-[#2a2e37]">
+                  <div className="flex justify-between text-[#9aa3af] pb-2">
                     <span>Subtotal</span>
-                    <span className="font-bold text-gray-900">{formatBDT(cartTotal)}</span>
+                    <span className="font-bold text-[#e8eaed]">{formatBDT(cartTotal)}</span>
                   </div>
                   {discountAmount > 0 && (
-                    <div className="flex justify-between text-emerald-700 font-bold py-2">
+                    <div className="flex justify-between text-emerald-400 font-bold py-2">
                       <span>Promo Discount</span>
                       <span>-{formatBDT(discountAmount)}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-gray-600 py-2">
+                  <div className="flex justify-between text-[#9aa3af] py-2">
                     <span>Delivery Charge</span>
-                    <span className="font-bold text-gray-900">{formatBDT(shippingCost)}</span>
+                    <span className="font-bold text-[#e8eaed]">{formatBDT(shippingCost)}</span>
                   </div>
-                  <div className="flex justify-between text-base font-black text-gray-900 pt-3">
+                  <div className="flex justify-between text-base font-black text-[#e8eaed] pt-3">
                     <span>Total Payable</span>
-                    <span className="text-[#ef233c]">{formatBDT(finalTotal)}</span>
+                    <span className="text-[#c45c5c]">{formatBDT(finalTotal)}</span>
                   </div>
                 </div>
 
                 <button
                   onClick={() => router.push("/checkout")}
-                  className="w-full py-3.5 px-4 rounded-2xl bg-[#ef233c] hover:bg-[#d90429] text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md shadow-red-500/25"
+                  className="w-full py-3.5 px-4 rounded-2xl bg-[#c45c5c] hover:bg-[#a84848] text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md shadow-black/40"
                 >
                   Proceed to Checkout <ArrowRight className="w-4 h-4" />
                 </button>
 
-                <p className="text-[10px] text-gray-500 text-center font-medium">
+                <p className="text-[10px] text-[#6b7280] text-center font-medium">
                   🔒 Safe & Secure Checkout • bKash, Cards, 0% EMI & Cash on Delivery
                 </p>
               </div>

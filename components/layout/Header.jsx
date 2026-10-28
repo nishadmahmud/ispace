@@ -19,14 +19,13 @@ import {
   X,
   RotateCcw,
   Flame,
-  Truck,
-  ArrowRight
+  Truck
 } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const { cartCount, cartTotal, setIsCartOpen, wishlist, compare, setIsMobileMenuOpen } = useStore();
+  const { cartCount, setIsCartOpen, wishlist, compare, setIsMobileMenuOpen } = useStore();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -77,24 +76,24 @@ export default function Header() {
   const navCategories = categories.filter((c) => c.slug !== "pre-owned");
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-xs">
+    <header className="sticky top-0 z-40 w-full bg-[#12151a]/90 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.45)]">
       {/* Top Utility Bar */}
-      <div className="hidden lg:block bg-gray-50/80 border-b border-gray-200 text-[10px] text-gray-600">
+      <div className="hidden lg:block bg-[#0a0c10]/90 border-b border-white/[0.04] text-[10px] text-[#9aa3af]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-7 flex items-center justify-between">
           <div className="flex items-center gap-5">
             <a
               href="tel:+8800000000000"
-              className="flex items-center gap-1 hover:text-red-600 transition-colors"
+              className="flex items-center gap-1 hover:text-[#e8eaed] transition-colors"
             >
-              <Phone className="w-3 h-3 text-[#ef233c]" />
-              <span>Demo Hotline: <strong className="text-gray-900">+880 0000-000000</strong></span>
+              <Phone className="w-3 h-3 text-[#6b7280]" />
+              <span>Demo Hotline: <strong className="text-[#e8eaed]">+880 0000-000000</strong></span>
             </a>
-            <div className="h-2.5 w-px bg-gray-300" />
+            <div className="h-2.5 w-px bg-[#3d4450]" />
             <Link
               href="/outlets"
-              className="flex items-center gap-1 hover:text-red-600 transition-colors text-gray-600"
+              className="flex items-center gap-1 hover:text-[#e8eaed] transition-colors text-[#9aa3af]"
             >
-              <MapPin className="w-3 h-3 text-gray-400" />
+              <MapPin className="w-3 h-3 text-[#6b7280]" />
               <span>5 Showrooms in Dhaka & Chattogram</span>
             </Link>
           </div>
@@ -102,25 +101,25 @@ export default function Header() {
           <div className="flex items-center gap-5">
             <Link
               href="/emi"
-              className="flex items-center gap-1 hover:text-gray-900 text-gray-600 font-medium transition-colors"
+              className="flex items-center gap-1 hover:text-[#e8eaed] text-[#9aa3af] font-medium transition-colors"
             >
-              <CreditCard className="w-3 h-3 text-gray-400" />
+              <CreditCard className="w-3 h-3 text-[#6b7280]" />
               <span>0% EMI Facility</span>
             </Link>
-            <div className="h-2.5 w-px bg-gray-300" />
+            <div className="h-2.5 w-px bg-[#3d4450]" />
             <Link
               href="/exchange"
-              className="flex items-center gap-1 hover:text-gray-900 text-gray-600 font-medium transition-colors"
+              className="flex items-center gap-1 hover:text-[#e8eaed] text-[#9aa3af] font-medium transition-colors"
             >
-              <RotateCcw className="w-3 h-3 text-gray-400" />
+              <RotateCcw className="w-3 h-3 text-[#6b7280]" />
               <span>Device Trade-in</span>
             </Link>
-            <div className="h-2.5 w-px bg-gray-300" />
+            <div className="h-2.5 w-px bg-[#3d4450]" />
             <Link
               href="/track-order"
-              className="flex items-center gap-1 hover:text-gray-900 text-gray-600 font-medium transition-colors"
+              className="flex items-center gap-1 hover:text-[#e8eaed] text-[#9aa3af] font-medium transition-colors"
             >
-              <Truck className="w-3 h-3 text-gray-400" />
+              <Truck className="w-3 h-3 text-[#6b7280]" />
               <span>Track Order</span>
             </Link>
           </div>
@@ -128,12 +127,13 @@ export default function Header() {
       </div>
 
       {/* Main Bar */}
+      <div className="bg-gradient-to-b from-[#181c24] to-[#14171c] border-b border-white/[0.05]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-14 flex items-center justify-between gap-3 lg:gap-6">
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(true)}
-            className="lg:hidden p-1.5 text-gray-700 hover:text-black rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+            className="lg:hidden p-2 text-[#9aa3af] hover:text-[#e8eaed] rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] transition-colors cursor-pointer"
             aria-label="Open navigation menu"
           >
             <Menu className="w-5 h-5" />
@@ -152,15 +152,15 @@ export default function Header() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
-                placeholder="Search iPhone 16 Pro, M4 MacBook, S25 Ultra, AirPods..."
-                className="w-full h-9 pl-9 pr-8 rounded-xl bg-gray-100/90 border border-gray-200 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-[#ef233c] focus:ring-1 focus:ring-red-500/20 transition-all shadow-2xs"
+                placeholder="Search for the item"
+                className="w-full h-10 pl-10 pr-8 rounded-2xl bg-[#1e232c] border border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] text-xs text-[#e8eaed] placeholder-[#6b7280] focus:outline-none focus:border-white/20 focus:bg-[#222832] transition-all"
               />
-              <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-3.5 h-3.5 text-[#6b7280] absolute left-3 top-1/2 -translate-y-1/2" />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 text-[10px] bg-gray-200 rounded-full w-4 h-4 flex items-center justify-center cursor-pointer"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#6b7280] hover:text-[#9aa3af] text-[10px] bg-[#2a2e37] rounded-full w-4 h-4 flex items-center justify-center cursor-pointer"
                 >
                   ✕
                 </button>
@@ -169,33 +169,33 @@ export default function Header() {
 
             {/* Live Autocomplete Dropdown */}
             {isSearchFocused && searchResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden z-50">
-                <div className="p-2 border-b border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-wider px-3 bg-gray-50">
+              <div className="absolute top-full left-0 right-0 mt-1.5 bg-[#14171c] border border-[#2a2e37] rounded-xl shadow-xl overflow-hidden z-50">
+                <div className="p-2 border-b border-[#2a2e37] text-[10px] font-bold text-[#6b7280] uppercase tracking-wider px-3 bg-[#1c1f26]">
                   Matching Products
                 </div>
-                <div className="divide-y divide-gray-100">
+                <div className="divide-y divide-[#2a2e37]">
                   {searchResults.map((item) => (
                     <Link
                       key={item.id}
                       href={`/product/${item.slug}`}
                       onClick={() => setIsSearchFocused(false)}
-                      className="p-2.5 flex items-center gap-3 hover:bg-gray-50 transition-colors"
+                      className="p-2.5 flex items-center gap-3 hover:bg-[#1c1f26] transition-colors"
                     >
                       <img
                         src={item.images[0]}
                         alt={item.name}
-                        className="w-10 h-10 object-cover rounded-md bg-gray-50 border border-gray-200 shrink-0"
+                        className="w-10 h-10 object-contain p-1 rounded-md bg-[#1c1f26] border border-[#2a2e37] shrink-0"
                       />
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs font-bold text-gray-900 hover:text-red-600 truncate">
+                        <p className="text-xs font-bold text-[#e8eaed] hover:text-white truncate">
                           {item.name}
                         </p>
-                        <p className="text-[10px] text-gray-500 mt-0.5">
+                        <p className="text-[10px] text-[#6b7280] mt-0.5">
                           {item.brand} • <span>{item.categoryName}</span>
                         </p>
                       </div>
                       <div className="text-right">
-                        <span className="text-xs font-black text-gray-900">
+                        <span className="text-xs font-black text-[#e8eaed]">
                           {formatBDT(item.price)}
                         </span>
                       </div>
@@ -205,7 +205,7 @@ export default function Header() {
                 <Link
                   href={`/shop?q=${encodeURIComponent(searchQuery)}`}
                   onClick={() => setIsSearchFocused(false)}
-                  className="block p-2 text-center text-xs font-bold text-red-600 hover:bg-red-50 transition-colors bg-gray-50 border-t border-gray-100"
+                  className="block p-2 text-center text-xs font-bold text-[#9aa3af] hover:text-[#e8eaed] hover:bg-[#1c1f26] transition-colors bg-[#14171c] border-t border-[#2a2e37]"
                 >
                   View all results for &quot;{searchQuery}&quot; →
                 </Link>
@@ -218,12 +218,12 @@ export default function Header() {
             {/* Compare */}
             <Link
               href="/compare"
-              className="relative p-2 rounded-xl text-gray-700 hover:text-black hover:bg-gray-100 transition-colors hidden sm:flex items-center justify-center border border-gray-200 shadow-2xs"
+              className="relative p-2.5 rounded-2xl text-[#9aa3af] hover:text-[#e8eaed] bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors hidden sm:flex items-center justify-center"
               title="Compare Gadgets"
             >
               <Scale className="w-4 h-4" />
               {compare.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#ef233c] text-white text-[9px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center shadow-xs">
+                <span className="absolute -top-1 -right-1 bg-[#c45c5c] text-white text-[9px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center">
                   {compare.length}
                 </span>
               )}
@@ -232,12 +232,12 @@ export default function Header() {
             {/* Wishlist */}
             <Link
               href="/wishlist"
-              className="relative p-2 rounded-xl text-gray-700 hover:text-black hover:bg-gray-100 transition-colors flex items-center justify-center border border-gray-200 shadow-2xs"
+              className="relative p-2.5 rounded-2xl text-[#9aa3af] hover:text-[#e8eaed] bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors flex items-center justify-center"
               title="Saved Items"
             >
               <Heart className="w-4 h-4" />
               {wishlist.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#ef233c] text-white text-[9px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center shadow-xs">
+                <span className="absolute -top-1 -right-1 bg-[#c45c5c] text-white text-[9px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center">
                   {wishlist.length}
                 </span>
               )}
@@ -246,20 +246,15 @@ export default function Header() {
             {/* Cart Trigger */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="flex items-center gap-2 pl-2.5 pr-3 py-1.5 rounded-xl bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-900 transition-all shadow-2xs group cursor-pointer"
+              className="relative p-2.5 rounded-2xl text-[#9aa3af] hover:text-[#e8eaed] bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors flex items-center justify-center cursor-pointer"
+              aria-label="Open cart"
             >
-              <div className="w-7 h-7 rounded-lg bg-red-50 flex items-center justify-center text-[#ef233c] relative">
-                <ShoppingBag className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#ef233c] text-white text-[9px] font-black rounded-full w-3.5 h-3.5 flex items-center justify-center shadow-xs">
-                    {cartCount}
-                  </span>
-                )}
-              </div>
-              <div className="hidden sm:block text-left text-xs leading-none">
-                <span className="text-[9px] text-gray-500 block leading-tight font-medium">My Bag</span>
-                <span className="font-extrabold text-gray-900 leading-tight">{formatBDT(cartTotal)}</span>
-              </div>
+              <ShoppingBag className="w-4 h-4" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-[#c45c5c] text-white text-[9px] font-black rounded-full w-3.5 h-3.5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </button>
           </div>
         </div>
@@ -273,14 +268,14 @@ export default function Header() {
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setIsSearchFocused(true)}
               placeholder="Search tech & gadgets..."
-              className="w-full h-9 pl-9 pr-8 rounded-xl bg-gray-100 border border-gray-200 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-[#ef233c] shadow-2xs"
+              className="w-full h-9 pl-9 pr-8 rounded-xl bg-[#1e232c] border border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] text-xs text-[#e8eaed] placeholder-[#6b7280] focus:outline-none focus:border-white/20"
             />
-            <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-[#6b7280] absolute left-3 top-1/2 -translate-y-1/2" />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 text-[10px] bg-gray-200 rounded-full w-4 h-4 flex items-center justify-center cursor-pointer"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#6b7280] hover:text-[#9aa3af] text-[10px] bg-[#2a2e37] rounded-full w-4 h-4 flex items-center justify-center cursor-pointer"
               >
                 ✕
               </button>
@@ -289,11 +284,11 @@ export default function Header() {
 
           {/* Mobile Live Autocomplete Dropdown */}
           {isSearchFocused && searchResults.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden z-50">
-              <div className="p-2 border-b border-gray-100 text-[10px] font-bold text-gray-500 uppercase tracking-wider px-3 bg-gray-50">
+            <div className="absolute top-full left-0 right-0 mt-1 bg-[#14171c] border border-[#2a2e37] rounded-xl shadow-xl overflow-hidden z-50">
+              <div className="p-2 border-b border-[#2a2e37] text-[10px] font-bold text-[#6b7280] uppercase tracking-wider px-3 bg-[#1c1f26]">
                 Matching Products
               </div>
-              <div className="divide-y divide-gray-100 max-h-56 overflow-y-auto">
+              <div className="divide-y divide-[#2a2e37] max-h-56 overflow-y-auto">
                 {searchResults.map((item) => (
                   <Link
                     key={item.id}
@@ -302,23 +297,23 @@ export default function Header() {
                       setIsSearchFocused(false);
                       setSearchQuery("");
                     }}
-                    className="p-2.5 flex items-center gap-3 hover:bg-gray-50 transition-colors"
+                    className="p-2.5 flex items-center gap-3 hover:bg-[#1c1f26] transition-colors"
                   >
                     <img
                       src={item.images[0]}
                       alt={item.name}
-                      className="w-10 h-10 object-cover rounded-md bg-gray-50 border border-gray-200 shrink-0"
+                      className="w-10 h-10 object-cover rounded-md bg-[#1c1f26] border border-[#2a2e37] shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-bold text-gray-900 hover:text-red-600 truncate">
+                      <p className="text-xs font-bold text-[#e8eaed] hover:text-[#c45c5c] truncate">
                         {item.name}
                       </p>
-                      <p className="text-[10px] text-gray-500 mt-0.5">
+                      <p className="text-[10px] text-[#6b7280] mt-0.5">
                         {item.brand} • <span>{item.categoryName}</span>
                       </p>
                     </div>
                     <div className="text-right">
-                      <span className="text-xs font-black text-gray-900">
+                      <span className="text-xs font-black text-[#e8eaed]">
                         {formatBDT(item.price)}
                       </span>
                     </div>
@@ -331,7 +326,7 @@ export default function Header() {
                   setIsSearchFocused(false);
                   setSearchQuery("");
                 }}
-                className="block p-2 text-center text-xs font-bold text-red-600 hover:bg-red-50 transition-colors bg-gray-50 border-t border-gray-100"
+                className="block p-2 text-center text-xs font-bold text-[#c45c5c] hover:bg-[#c45c5c]/10 transition-colors bg-[#1c1f26] border-t border-[#2a2e37]"
               >
                 View all results for &quot;{searchQuery}&quot; →
               </Link>
@@ -339,15 +334,16 @@ export default function Header() {
           )}
         </div>
       </div>
+      </div>
 
       {/* Category Navigation Bar (Desktop) */}
-      <nav className="hidden lg:block bg-white border-t border-gray-200">
+      <nav className="hidden lg:block bg-[#1a1e26] border-t border-white/[0.05]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ul className="flex items-center justify-between text-[11px] sm:text-xs font-semibold py-1.5 tracking-wide text-gray-700">
+          <ul className="flex items-center justify-between text-[11px] sm:text-xs font-semibold py-2 tracking-wide text-[#9aa3af]">
             <li>
               <Link
                 href="/shop"
-                className="py-1 px-2 hover:text-[#ef233c] transition-colors"
+                className="py-1 px-2 hover:text-[#e8eaed] transition-colors"
               >
                 All Products
               </Link>
@@ -358,8 +354,8 @@ export default function Header() {
                   href={`/category/${cat.slug}`}
                   className={`py-1 px-2 transition-colors ${
                     pathname === `/category/${cat.slug}`
-                      ? "text-[#ef233c] font-bold"
-                      : "hover:text-[#ef233c]"
+                      ? "text-[#e8eaed] font-bold"
+                      : "hover:text-[#e8eaed]"
                   }`}
                 >
                   {cat.name}
@@ -371,8 +367,8 @@ export default function Header() {
                 href="/category/pre-owned"
                 className={`py-1 px-2 transition-colors ${
                   pathname === "/category/pre-owned"
-                    ? "text-[#ef233c] font-bold"
-                    : "hover:text-[#ef233c]"
+                    ? "text-[#e8eaed] font-bold"
+                    : "hover:text-[#e8eaed]"
                 }`}
               >
                 Certified Pre-Owned
@@ -381,10 +377,10 @@ export default function Header() {
             <li>
               <Link
                 href="/shop?deal=flash"
-                className="py-1 px-2 text-[#ef233c] hover:text-red-700 font-bold transition-colors inline-flex items-center gap-1"
+                className="py-1 px-3 rounded-full border border-[#c45c5c]/40 text-[#c45c5c] hover:bg-[#c45c5c]/10 font-bold transition-colors inline-flex items-center gap-1"
               >
                 <Flame className="w-3 h-3" />
-                Hot Deals
+                Offer
               </Link>
             </li>
           </ul>

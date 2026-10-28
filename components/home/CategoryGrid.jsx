@@ -1,69 +1,47 @@
 import React from "react";
 import Link from "next/link";
 import { categories } from "@/data/products";
-import {
-  Smartphone,
-  Laptop,
-  Watch,
-  Headphones,
-  Zap,
-  Gamepad2,
-  RotateCcw,
-  ArrowRight
-} from "lucide-react";
-
-const iconMap = {
-  Smartphone: Smartphone,
-  Laptop: Laptop,
-  Watch: Watch,
-  Headphones: Headphones,
-  Zap: Zap,
-  Gamepad2: Gamepad2,
-  RotateCcw: RotateCcw
-};
+import { ArrowRight } from "lucide-react";
 
 export default function CategoryGrid() {
   return (
-    <section className="py-12 bg-white">
+    <section className="py-10 section-canvas">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+        <div className="flex items-end justify-between mb-6 gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-[#ef233c] uppercase tracking-wider mb-1">
-              <span>Explore Categories</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
-              Shop by Department
+            <h2 className="text-xl sm:text-2xl font-black text-[#e8eaed] tracking-tight">
+              Categories
             </h2>
+            <p className="text-xs text-[#6b7280] mt-1">Browse every department</p>
           </div>
           <Link
             href="/shop"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-red-600 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#9aa3af] hover:text-[#e8eaed] transition-colors"
           >
-            All Products <ArrowRight className="w-4 h-4" />
+            See all <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        <div className="flex overflow-x-auto no-scrollbar gap-2.5 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-4 lg:grid-cols-7 sm:gap-4">
-          {categories.map((cat) => {
-            const Icon = iconMap[cat.icon] || Zap;
-            return (
-              <Link
-                key={cat.id}
-                href={`/category/${cat.slug}`}
-                className="shrink-0 w-28 sm:w-auto group relative rounded-2xl bg-white border border-gray-200 hover:border-red-500/60 p-3 sm:p-4 flex flex-col items-center text-center transition-all duration-300 shadow-2xs hover:shadow-md hover:-translate-y-1"
-              >
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gray-100 group-hover:bg-red-50 border border-gray-200 group-hover:border-red-200 flex items-center justify-center text-gray-700 group-hover:text-[#ef233c] transition-all duration-300 mb-2 sm:mb-3">
-                  <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
-                </div>
-                <h3 className="text-xs font-bold text-gray-800 group-hover:text-red-600 line-clamp-1 transition-colors">
-                  {cat.name}
-                </h3>
-                <span className="text-[10px] sm:text-[11px] text-gray-500 mt-0.5">
-                  {cat.count}
-                </span>
-              </Link>
-            );
-          })}
+        <div className="flex overflow-x-auto no-scrollbar gap-3 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-4 lg:grid-cols-7 sm:gap-4">
+          {categories.map((cat) => (
+            <Link
+              key={cat.id}
+              href={`/category/${cat.slug}`}
+              className="shrink-0 w-[7.25rem] sm:w-auto group rounded-3xl bg-gradient-to-b from-[#1a1f28] to-[#141820] border border-white/[0.07] hover:border-white/15 shadow-[0_6px_20px_rgba(0,0,0,0.25)] hover:shadow-[0_10px_28px_rgba(0,0,0,0.35)] p-3 flex flex-col items-center text-center transition-all duration-300"
+            >
+              <div className="img-well w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] rounded-2xl flex items-center justify-center mb-2.5 overflow-hidden">
+                <img
+                  src={cat.image || cat.banner}
+                  alt={cat.name}
+                  className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <h3 className="text-[11px] sm:text-xs font-bold text-[#e8eaed] line-clamp-1">
+                {cat.name.split(" & ")[0]}
+              </h3>
+              <span className="text-[10px] text-[#6b7280] mt-0.5">{cat.count}</span>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

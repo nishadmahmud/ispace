@@ -27,31 +27,31 @@ export default async function CategoryPage({ params }) {
   const categoryProducts = products.filter((p) => p.category === slug);
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-gray-900 py-8">
+    <div className="min-h-screen bg-[#0c0e12] text-[#e8eaed] py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs text-gray-500 mb-6">
-          <Link href="/" className="hover:text-black transition-colors">
+        <div className="flex items-center gap-2 text-xs text-[#6b7280] mb-6">
+          <Link href="/" className="hover:text-[#e8eaed] transition-colors">
             Home
           </Link>
           <span>/</span>
-          <Link href="/shop" className="hover:text-black transition-colors">
+          <Link href="/shop" className="hover:text-[#e8eaed] transition-colors">
             Catalog
           </Link>
           <span>/</span>
-          <span className="text-gray-900 font-bold">{category.name}</span>
+          <span className="text-[#e8eaed] font-bold">{category.name}</span>
         </div>
 
         {/* Hero Category Banner */}
-        <div className="relative rounded-3xl overflow-hidden border border-gray-200 p-6 sm:p-10 mb-10 bg-white shadow-xs">
+        <div className="relative rounded-3xl overflow-hidden border border-[#2a2e37] p-6 sm:p-10 mb-10 bg-[#14171c] shadow-xs">
           <div className="max-w-xl space-y-3 relative z-10">
-            <span className="px-3 py-1 rounded-full bg-red-100 text-[#ef233c] text-[11px] font-black uppercase tracking-wider">
+            <span className="px-3 py-1 rounded-full bg-[#c45c5c]/15 text-[#c45c5c] text-[11px] font-black uppercase tracking-wider">
               {categoryProducts.length} Items Available
             </span>
-            <h1 className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-black text-[#e8eaed] tracking-tight">
               {category.name}
             </h1>
-            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#9aa3af] leading-relaxed">
               {category.description}
             </p>
           </div>
@@ -59,13 +59,13 @@ export default async function CategoryPage({ params }) {
 
         {/* Products Grid */}
         {categoryProducts.length === 0 ? (
-          <div className="p-12 text-center rounded-3xl bg-white border border-gray-200 shadow-xs">
-            <p className="text-gray-500 text-sm">
+          <div className="p-12 text-center rounded-3xl bg-[#14171c] border border-[#2a2e37] shadow-xs">
+            <p className="text-[#6b7280] text-sm">
               No products found in this category right now.
             </p>
             <Link
               href="/shop"
-              className="mt-4 inline-block px-5 py-2.5 rounded-xl bg-[#ef233c] text-white text-xs font-bold"
+              className="mt-4 inline-block px-5 py-2.5 rounded-xl bg-[#c45c5c] text-white text-xs font-bold"
             >
               Back to Catalog
             </Link>
