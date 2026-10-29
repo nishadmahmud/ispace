@@ -111,10 +111,10 @@ export default function OrderSuccessClient({ orderId }) {
               </span>
             </div>
             <a
-              href="tel:+8800000000000"
+              href="tel:+8801958434343"
               className="font-bold text-[#e8eaed] hover:text-[#c45c5c] transition-colors shrink-0"
             >
-              +880 0000-000000
+              +880 1958-434343
             </a>
           </div>
 

@@ -64,7 +64,7 @@ export default function CertifiedPreOwned() {
                 Calculate Exchange Value <ArrowRight className="w-4 h-4" />
               </Link>
               <p className="text-[10px] text-[#6b7280] text-center font-medium">
-                Instant cash valuation at all 5 showrooms
+                Instant cash valuation at Jamuna Future Park outlets
               </p>
             </div>
           </div>

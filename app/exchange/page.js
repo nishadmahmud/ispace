@@ -185,8 +185,8 @@ export default function ExchangePage() {
               <span className="w-6 h-6 rounded-full bg-[#0c0e12] text-white font-black flex items-center justify-center text-xs">
                 2
               </span>
-              <h3 className="font-bold text-[#e8eaed]">Visit Any Showroom</h3>
-              <p className="text-[#6b7280]">Bring your old device to Gulshan, Dhanmondi, Uttara, Mirpur, or Chattogram.</p>
+              <h3 className="font-bold text-[#e8eaed]">Visit Any Outlet</h3>
+              <p className="text-[#6b7280]">Bring your old device to our Main or Premium outlet at Jamuna Future Park (Level 4).</p>
             </div>
             <div className="p-4 rounded-2xl bg-[#1c1f26] border border-[#2a2e37] space-y-2">
               <span className="w-6 h-6 rounded-full bg-[#0c0e12] text-white font-black flex items-center justify-center text-xs">

@@ -1,6 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import Logo from "@/components/common/Logo";
+import { contactConfig } from "@/data/contact";
+import {
+  InstagramIcon,
+  YouTubeIcon,
+  TikTokIcon,
+  MessengerIcon,
+  WhatsAppIcon,
+} from "@/components/common/SocialIcons";
 import {
   Phone,
   Mail,
@@ -10,7 +18,8 @@ import {
   CreditCard,
   RotateCcw,
   Clock,
-  ArrowRight
+  ArrowRight,
+  MessageCircle
 } from "lucide-react";
 
 export default function Footer() {
@@ -74,19 +83,86 @@ export default function Footer() {
             </p>
             <div className="space-y-2 pt-2">
               <a
-                href="tel:+8800000000000"
+                href={`tel:${contactConfig.phoneRaw}`}
                 className="flex items-center gap-2 text-[#e8eaed] hover:text-[#ef233c] transition-colors font-bold text-xs"
               >
-                <Phone className="w-4 h-4 text-[#ef233c]" /> +880 0000-000000 (Demo Hotline)
+                <Phone className="w-4 h-4 text-[#ef233c]" /> Hotline: {contactConfig.phone}
               </a>
               <a
-                href="mailto:demo@ispacebd.example.com"
+                href={contactConfig.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-[#9aa3af] hover:text-emerald-400 transition-colors text-xs font-semibold"
+              >
+                <span className="text-emerald-400"><WhatsAppIcon className="w-4 h-4" /></span> WhatsApp: {contactConfig.whatsapp}
+              </a>
+              <a
+                href={contactConfig.emailLink}
                 className="flex items-center gap-2 text-[#9aa3af] hover:text-[#e8eaed] transition-colors text-xs"
               >
-                <Mail className="w-4 h-4 text-[#6b7280]" /> demo@ispacebd.example.com
+                <Mail className="w-4 h-4 text-[#6b7280]" /> {contactConfig.email}
               </a>
               <div className="flex items-center gap-2 text-[#9aa3af] text-xs">
-                <Clock className="w-4 h-4 text-[#6b7280]" /> Everyday 10:00 AM - 9:00 PM
+                <Clock className="w-4 h-4 text-[#6b7280]" /> {contactConfig.hours}
+              </div>
+            </div>
+
+            {/* Social Media Follow Buttons */}
+            <div className="pt-3">
+              <p className="text-[11px] font-bold text-[#e8eaed] mb-2 uppercase tracking-wider">
+                Follow Us
+              </p>
+              <div className="flex items-center gap-2">
+                <a
+                  href={contactConfig.socials.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-xl bg-[#14171c] hover:bg-[#ef233c] text-[#9aa3af] hover:text-white border border-[#2a2e37] hover:border-[#ef233c] flex items-center justify-center transition-all duration-200"
+                  title="YouTube @ispacebd"
+                  aria-label="YouTube"
+                >
+                  <YouTubeIcon className="w-4 h-4" />
+                </a>
+                <a
+                  href={contactConfig.socials.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-xl bg-[#14171c] hover:bg-gradient-to-tr hover:from-amber-500 hover:via-pink-500 hover:to-purple-600 text-[#9aa3af] hover:text-white border border-[#2a2e37] hover:border-pink-500 flex items-center justify-center transition-all duration-200"
+                  title="Instagram @ispacebd"
+                  aria-label="Instagram"
+                >
+                  <InstagramIcon className="w-4 h-4" />
+                </a>
+                <a
+                  href={contactConfig.socials.tiktok}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-xl bg-[#14171c] hover:bg-black text-[#9aa3af] hover:text-cyan-400 border border-[#2a2e37] hover:border-cyan-400 flex items-center justify-center transition-all duration-200"
+                  title="TikTok @ispacebd"
+                  aria-label="TikTok"
+                >
+                  <TikTokIcon className="w-4 h-4" />
+                </a>
+                <a
+                  href={contactConfig.socials.messenger}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-xl bg-[#14171c] hover:bg-[#0084ff] text-[#9aa3af] hover:text-white border border-[#2a2e37] hover:border-[#0084ff] flex items-center justify-center transition-all duration-200"
+                  title="Messenger iSPACE BD"
+                  aria-label="Messenger"
+                >
+                  <MessengerIcon className="w-4 h-4" />
+                </a>
+                <a
+                  href={contactConfig.socials.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-xl bg-[#14171c] hover:bg-[#25D366] text-[#9aa3af] hover:text-white border border-[#2a2e37] hover:border-[#25D366] flex items-center justify-center transition-all duration-200"
+                  title="WhatsApp +880 1958-434343"
+                  aria-label="WhatsApp"
+                >
+                  <WhatsAppIcon className="w-4 h-4" />
+                </a>
               </div>
             </div>
           </div>
@@ -177,31 +253,33 @@ export default function Footer() {
           {/* Showroom Outlets Quick View */}
           <div>
             <h3 className="text-[#e8eaed] font-bold text-xs tracking-wider uppercase mb-4">
-              Demo Experience Stores
+              Jamuna Future Park Outlets
             </h3>
             <ul className="space-y-3">
               <li className="space-y-0.5">
-                <strong className="text-[#e8eaed] block">Gulshan Tech Tower</strong>
-                <p className="text-[11px] text-[#6b7280]">Suite 404, Level 4, Silicon Avenue, Gulshan-1</p>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ef233c]" />
+                  <strong className="text-[#e8eaed] block">Main Outlet — Block B</strong>
+                </div>
+                <p className="text-[11px] text-[#6b7280] pl-3">
+                  Shop 4B-016C, Level 4, Jamuna Future Park, Pragati Sarani, Dhaka
+                </p>
               </li>
               <li className="space-y-0.5">
-                <strong className="text-[#e8eaed] block">Dhanmondi Horizon Studio</strong>
-                <p className="text-[11px] text-[#6b7280]">Holding 77, Level 3, Nova Horizon Plaza, Satmasjid Rd</p>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                  <strong className="text-[#e8eaed] block">Premium Outlet — Block A</strong>
+                </div>
+                <p className="text-[11px] text-[#6b7280] pl-3">
+                  Shop 4A-049A, Level 4, Jamuna Future Park, Pragati Sarani, Dhaka
+                </p>
               </li>
-              <li className="space-y-0.5">
-                <strong className="text-[#e8eaed] block">Uttara Zenith Arcade</strong>
-                <p className="text-[11px] text-[#6b7280]">Plot 12, Level 2, Sector 7, Uttara Model Town</p>
-              </li>
-              <li className="space-y-0.5">
-                <strong className="text-[#e8eaed] block">Chattogram Marina Center</strong>
-                <p className="text-[11px] text-[#6b7280]">Suite 305, Level 3, Marina Complex, Agrabad C/A</p>
-              </li>
-              <li className="pt-1">
+              <li className="pt-2">
                 <Link
                   href="/outlets"
                   className="text-[#ef233c] hover:text-[#ef233c] font-bold flex items-center gap-1"
                 >
-                  View All Outlets & Maps <ArrowRight className="w-3 h-3" />
+                  View Outlets Details & Map <ArrowRight className="w-3 h-3" />
                 </Link>
               </li>
             </ul>

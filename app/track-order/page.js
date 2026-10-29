@@ -163,10 +163,10 @@ export default function TrackOrderPage() {
                     Please ensure you typed the order code correctly or reach our support hotline:
                   </p>
                   <a
-                    href="tel:+8800000000000"
+                    href="tel:+8801958434343"
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-[#e8eaed] hover:text-[#c45c5c] mt-2"
                   >
-                    <Phone className="w-3.5 h-3.5 text-[#c45c5c]" /> +880 0000-000000
+                    <Phone className="w-3.5 h-3.5 text-[#c45c5c]" /> +880 1958-434343
                   </a>
                 </div>
               )}

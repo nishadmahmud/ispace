@@ -1,0 +1,20 @@
+export const contactConfig = {
+  brandName: "iSPACE BD",
+  phone: "+880 1958-434343",
+  phoneRaw: "+8801958434343",
+  whatsapp: "+880 1958-434343",
+  whatsappLink: "https://wa.me/8801958434343",
+  email: "ispacebd1@gmail.com",
+  emailLink: "mailto:ispacebd1@gmail.com",
+  messengerLink: "https://www.facebook.com/messages/t/iSpaceBD1/",
+  facebookPageLink: "https://www.facebook.com/iSpaceBD1",
+  socials: {
+    youtube: "https://youtube.com/@ispacebd",
+    instagram: "https://www.instagram.com/ispacebd",
+    tiktok: "https://tiktok.com/@ispacebd",
+    messenger: "https://www.facebook.com/messages/t/iSpaceBD1/",
+    whatsapp: "https://wa.me/8801958434343",
+  },
+  locationSummary: "Jamuna Future Park, Level 4 (Block A & Block B)",
+  hours: "Everyday 11:00 AM - 9:00 PM (Weekly Closed: Wednesday)",
+};

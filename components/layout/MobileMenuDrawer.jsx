@@ -6,6 +6,14 @@ import { usePathname } from "next/navigation";
 import Logo from "@/components/common/Logo";
 import { useStore } from "@/context/StoreContext";
 import { categories } from "@/data/products";
+import { contactConfig } from "@/data/contact";
+import {
+  InstagramIcon,
+  YouTubeIcon,
+  TikTokIcon,
+  MessengerIcon,
+  WhatsAppIcon,
+} from "@/components/common/SocialIcons";
 import {
   X,
   CreditCard,
@@ -130,15 +138,69 @@ export default function MobileMenuDrawer() {
           </div>
         </div>
 
-        {/* Footer Demo Hotline */}
-        <div className="pt-4 border-t border-[#2a2e37]">
+        {/* Footer Contact & Socials */}
+        <div className="pt-4 border-t border-[#2a2e37] space-y-2">
           <a
-            href="tel:+8800000000000"
-            className="flex items-center gap-2 p-3 rounded-xl bg-[#1c1f26] border border-[#2a2e37] text-xs font-bold text-[#e8eaed] hover:bg-[#1c1f26] transition-colors"
+            href={`tel:${contactConfig.phoneRaw}`}
+            className="flex items-center justify-between p-2.5 rounded-xl bg-[#1c1f26] border border-[#2a2e37] text-xs font-bold text-[#e8eaed] hover:bg-[#252a34] transition-colors"
           >
-            <Phone className="w-4 h-4 text-[#c45c5c]" />
-            <span>Demo Hotline: +880 0000-000000</span>
+            <span className="flex items-center gap-2">
+              <Phone className="w-4 h-4 text-[#ef233c]" />
+              <span>Hotline: {contactConfig.phone}</span>
+            </span>
           </a>
+          <a
+            href={contactConfig.whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-xs font-bold text-emerald-400 hover:bg-emerald-500/20 transition-colors"
+          >
+            <span className="flex items-center gap-2">
+              <WhatsAppIcon className="w-4 h-4" />
+              <span>WhatsApp Chat</span>
+            </span>
+            <span className="text-[10px] text-emerald-400/80 font-normal">Active</span>
+          </a>
+
+          {/* Social Links Row */}
+          <div className="flex items-center justify-around pt-2 px-1 text-[#9aa3af]">
+            <a
+              href={contactConfig.socials.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg hover:text-[#ef233c] hover:bg-[#1c1f26] transition-colors"
+              aria-label="YouTube"
+            >
+              <YouTubeIcon className="w-4 h-4" />
+            </a>
+            <a
+              href={contactConfig.socials.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg hover:text-pink-400 hover:bg-[#1c1f26] transition-colors"
+              aria-label="Instagram"
+            >
+              <InstagramIcon className="w-4 h-4" />
+            </a>
+            <a
+              href={contactConfig.socials.tiktok}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg hover:text-white hover:bg-[#1c1f26] transition-colors"
+              aria-label="TikTok"
+            >
+              <TikTokIcon className="w-4 h-4" />
+            </a>
+            <a
+              href={contactConfig.socials.messenger}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg hover:text-[#0084ff] hover:bg-[#1c1f26] transition-colors"
+              aria-label="Messenger"
+            >
+              <MessengerIcon className="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </div>
     </div>

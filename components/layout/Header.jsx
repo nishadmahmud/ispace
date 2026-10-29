@@ -82,11 +82,11 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-7 flex items-center justify-between">
           <div className="flex items-center gap-5">
             <a
-              href="tel:+8800000000000"
+              href="tel:+8801958434343"
               className="flex items-center gap-1 hover:text-[#e8eaed] transition-colors"
             >
-              <Phone className="w-3 h-3 text-[#6b7280]" />
-              <span>Demo Hotline: <strong className="text-[#e8eaed]">+880 0000-000000</strong></span>
+              <Phone className="w-3 h-3 text-[#ef233c]" />
+              <span>Hotline: <strong className="text-[#e8eaed]">+880 1958-434343</strong></span>
             </a>
             <div className="h-2.5 w-px bg-[#3d4450]" />
             <Link
@@ -94,7 +94,7 @@ export default function Header() {
               className="flex items-center gap-1 hover:text-[#e8eaed] transition-colors text-[#9aa3af]"
             >
               <MapPin className="w-3 h-3 text-[#6b7280]" />
-              <span>5 Showrooms in Dhaka & Chattogram</span>
+              <span>Jamuna Future Park, Level 4 (Block A & B)</span>
             </Link>
           </div>
 

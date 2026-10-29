@@ -392,13 +392,13 @@ export default function ProductDetailClient({ product, relatedProducts }) {
             {/* Express Hotline info */}
             <div className="p-3 rounded-2xl bg-[#1c1f26] border border-[#2a2e37] flex flex-col sm:flex-row items-center justify-between text-xs text-[#9aa3af] gap-2">
               <span className="flex items-center gap-2 font-medium">
-                <Phone className="w-3.5 h-3.5 text-[#c45c5c]" /> Demo Support Hotline:
+                <Phone className="w-3.5 h-3.5 text-[#c45c5c]" /> Support Hotline:
               </span>
               <a
-                href="tel:+8800000000000"
+                href="tel:+8801958434343"
                 className="font-bold text-[#e8eaed] hover:text-[#c45c5c] transition-colors"
               >
-                +880 0000-000000
+                +880 1958-434343
               </a>
             </div>
           </div>
