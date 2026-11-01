@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Logo({ className = "h-5.5 sm:h-6" }) {
   return (
     <Link href="/" className="inline-flex items-center group select-none">
-      <div className="bg-[#0a0b0e] px-2.5 py-1 rounded-xl border border-[#2a2e37] shadow-2xs flex items-center transition-all duration-200 group-hover:border-[#3d4450]">
+      <div className="bg-[#0a0b0e] px-2.5 py-1 rounded-xl border border-[#2a2e37] shadow-2xs flex items-center transition-all duration-200 group-hover:border-[#3d4450] ispace-logo-badge">
         <img
           src="/images/logo.png"
           alt="iSPACE BD"

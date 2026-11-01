@@ -274,7 +274,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                       onClick={() => setSelectedColor(c.name)}
                       className={`px-3 py-2 rounded-xl border text-xs font-medium flex items-center gap-2 transition-all cursor-pointer ${
                         isSelected
-                          ? "border-[#2a2e37] bg-[#1c1f26] text-[#e8eaed] font-bold ring-1 ring-gray-900"
+                          ? "border-[#c45c5c] bg-[#1c1f26] text-[#e8eaed] font-bold ring-2 ring-[#c45c5c]"
                           : "border-[#2a2e37] bg-[#14171c] text-[#9aa3af] hover:border-[#3d4450]"
                       }`}
                     >
@@ -306,7 +306,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                       onClick={() => handleStorageChange(s)}
                       className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                         isSelected
-                          ? "border-[#2a2e37] bg-[#1c1f26] text-[#e8eaed] ring-1 ring-gray-900 font-bold"
+                          ? "border-[#c45c5c] bg-[#1c1f26] text-[#e8eaed] ring-2 ring-[#c45c5c] font-bold"
                           : "border-[#2a2e37] bg-[#14171c] text-[#9aa3af] hover:border-[#3d4450]"
                       }`}
                     >
@@ -337,7 +337,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                       onClick={() => setSelectedSim(sim)}
                       className={`px-3 py-2 rounded-xl border text-xs text-left transition-all cursor-pointer ${
                         isSelected
-                          ? "border-[#2a2e37] bg-[#1c1f26] text-[#e8eaed] font-bold ring-1 ring-gray-900"
+                          ? "border-[#c45c5c] bg-[#1c1f26] text-[#e8eaed] font-bold ring-2 ring-[#c45c5c]"
                           : "border-[#2a2e37] bg-[#14171c] text-[#9aa3af] hover:border-[#3d4450]"
                       }`}
                     >

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/common/Logo";
+import ThemeToggle from "@/components/common/ThemeToggle";
 import { useStore } from "@/context/StoreContext";
 import { products, categories } from "@/data/products";
 import { formatBDT } from "@/data/emi-banks";
@@ -215,6 +216,9 @@ export default function Header() {
 
           {/* Action Icons */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
             {/* Compare */}
             <Link
               href="/compare"

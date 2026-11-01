@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/common/Logo";
+import ThemeToggle from "@/components/common/ThemeToggle";
 import { useStore } from "@/context/StoreContext";
 import { categories } from "@/data/products";
 import { contactConfig } from "@/data/contact";
@@ -135,6 +136,14 @@ export default function MobileMenuDrawer() {
             >
               <Truck className="w-4 h-4 text-[#6b7280]" /> Track Order Status
             </Link>
+          </div>
+
+          {/* Theme Preference */}
+          <div className="pt-4 border-t border-[#2a2e37]">
+            <p className="text-[10px] font-bold text-[#6b7280] uppercase tracking-widest px-3 mb-2">
+              Theme Mode
+            </p>
+            <ThemeToggle showLabel />
           </div>
         </div>
 
