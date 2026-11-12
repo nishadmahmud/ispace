@@ -58,16 +58,6 @@ export const categories = [
     count: "20+ Gadgets",
     description: "PlayStation 5 Slim, DJI 4K Drones, handheld consoles & gimbals.",
     banner: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-gadget-bd23b472-2488-41c4-999e-07d3780d103f.png"
-  },
-  {
-    id: "pre-owned",
-    name: "Certified Pre-Owned",
-    slug: "pre-owned",
-    icon: "RotateCcw",
-    image: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-tablet-099fbcd0-5c29-4abf-92fc-0c950db9217e.png",
-    count: "50+ Inspected",
-    description: "iSPACE Recell certified Grade A+ devices with 7-day replacement.",
-    banner: "https://dazzle.sgp1.cdn.digitaloceanspaces.com/2026-09/catagory-tablet-099fbcd0-5c29-4abf-92fc-0c950db9217e.png"
   }
 ];
 
@@ -1263,104 +1253,6 @@ export const products = [
       "Network": "5G Dual SIM",
       "Battery": "Large capacity + fast charge",
       "Brand": "Xiaomi / Redmi"
-    }
-  },
-
-  // CERTIFIED PRE-OWNED (RECELL)
-  {
-    id: "preowned-iphone-14-pro-256gb",
-    name: "iPhone 14 Pro 256GB (Certified Pre-Owned)",
-    slug: "preowned-iphone-14-pro-256gb",
-    brand: "Apple",
-    category: "pre-owned",
-    categoryName: "Certified Pre-Owned",
-    price: 88500,
-    regularPrice: 125000,
-    badge: "Grade A+ (92% Battery)",
-    rating: 4.86,
-    reviewCount: 76,
-    inStock: true,
-    stockCount: 4,
-    warranty: "7 Days Replacement + 1 Year iSPACE Service Warranty",
-    isFlashDeal: true,
-    flashDiscount: "29% OFF",
-    featured: true,
-    isNew: false,
-    isPreOwned: true,
-    images: [
-      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/63447/iPhone-17-Pro-Max-Price-in-Bangladesh-Cosmic-Orange.jpg"
-    ],
-    colors: [
-      { name: "Deep Purple", hex: "#4d4157" },
-      { name: "Space Black", hex: "#2e2e30" },
-      { name: "Gold", hex: "#fae7cf" }
-    ],
-    storage: [
-      { size: "128GB", priceOffset: -7000 },
-      { size: "256GB", priceOffset: 0 },
-      { size: "512GB", priceOffset: 12000 }
-    ],
-    simOptions: [
-      "Physical SIM + eSIM (Global)",
-      "Physical Dual SIM"
-    ],
-    description: "iSPACE Recell Certified Pre-Owned. Flawless Grade A+ condition, passed 32-point hardware diagnostic inspection. 100% original Apple parts with guaranteed minimum 90% battery health.",
-    keyFeatures: [
-      "32-point comprehensive hardware & battery diagnostic passed",
-      "Guaranteed original OEM display, camera, and logic board",
-      "Includes premium braided charging cable and box",
-      "7 Days hassle-free replacement guarantee + 1 Year free service"
-    ],
-    specs: {
-      "Condition": "Grade A+ (No visible scratches, like new)",
-      "Battery Health": "92% - 96% Genuine Apple Battery",
-      "Display": "6.1-inch Super Retina XDR OLED 120Hz ProMotion with Dynamic Island",
-      "Camera": "48MP Pro triple-lens camera system with Photonic Engine",
-      "Warranty": "7 Days Replacement + 1 Year Service Warranty"
-    }
-  },
-  {
-    id: "preowned-macbook-air-m1",
-    name: "MacBook Air 13\" M1 (Certified Pre-Owned)",
-    slug: "preowned-macbook-air-m1",
-    brand: "Apple",
-    category: "pre-owned",
-    categoryName: "Certified Pre-Owned",
-    price: 68500,
-    regularPrice: 95000,
-    badge: "Super Deal",
-    rating: 4.88,
-    reviewCount: 89,
-    inStock: true,
-    stockCount: 7,
-    warranty: "7 Days Replacement + 1 Year iSPACE Service Warranty",
-    isFlashDeal: false,
-    featured: false,
-    isNew: false,
-    isPreOwned: true,
-    images: [
-      "https://dazzle.sgp1.cdn.digitaloceanspaces.com/118809/Apple-MacBook-Air-M5-13-Inch-10-Core-CPU-8-Core-GPU-price-in-bangladesh.jpg"
-    ],
-    colors: [
-      { name: "Space Gray", hex: "#5b5d62" },
-      { name: "Gold", hex: "#f0d4ba" }
-    ],
-    storage: [
-      { size: "8GB RAM / 256GB SSD", priceOffset: 0 },
-      { size: "16GB RAM / 256GB SSD", priceOffset: 14000 }
-    ],
-    simOptions: ["Wi-Fi 6"],
-    description: "The most legendary laptop ever built. Fully tested Grade A pre-owned unit with battery cycle under 120, silent fanless thermal design, and all-day battery life.",
-    keyFeatures: [
-      "M1 chip with 8-core CPU delivers blazing everyday performance",
-      "Fanless silent acoustic operation",
-      "Retina display with P3 wide color gamut"
-    ],
-    specs: {
-      "Condition": "Grade A+ Pristine",
-      "Battery Health": "94%+ Original Health",
-      "Processor": "Apple M1 chip",
-      "Weight": "1.29 kg"
     }
   }
 ];

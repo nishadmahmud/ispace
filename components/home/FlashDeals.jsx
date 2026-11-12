@@ -6,7 +6,7 @@ import { products } from "@/data/products";
 import ProductCard from "@/components/product/ProductCard";
 import { Flame, Clock, ArrowRight } from "lucide-react";
 
-export default function FlashDeals() {
+export default function FlashDeals({ items }) {
   const [timeLeft, setTimeLeft] = useState({
     hours: 14,
     minutes: 36,
@@ -30,7 +30,8 @@ export default function FlashDeals() {
     return () => clearInterval(timer);
   }, []);
 
-  const flashItems = products.filter((p) => p.isFlashDeal).slice(0, 5);
+  const defaultFlash = products.filter((p) => p.isFlashDeal).slice(0, 5);
+  const flashItems = Array.isArray(items) && items.length > 0 ? items.slice(0, 5) : defaultFlash;
 
   return (
     <section className="py-8 sm:py-10 section-lifted">

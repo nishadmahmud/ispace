@@ -1,13 +1,15 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/common/Logo";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import { useStore } from "@/context/StoreContext";
-import { categories } from "@/data/products";
+import { categories as defaultCategories } from "@/data/products";
 import { contactConfig } from "@/data/contact";
+import { getCategoriesFromServer } from "@/lib/api";
+import { slugifyProductName } from "@/lib/productSlug";
 import {
   InstagramIcon,
   YouTubeIcon,
@@ -23,12 +25,55 @@ import {
   Truck,
   Phone,
   Flame,
-  ArrowRight
+  ArrowRight,
+  ChevronDown
 } from "lucide-react";
 
-export default function MobileMenuDrawer() {
+export default function MobileMenuDrawer({ initialCategories = [] }) {
   const pathname = usePathname();
   const { isMobileMenuOpen, setIsMobileMenuOpen } = useStore();
+  const [categoriesList, setCategoriesList] = useState(
+    Array.isArray(initialCategories) && initialCategories.length > 0 ? initialCategories : []
+  );
+  const [expandedCat, setExpandedCat] = useState(null);
+
+  useEffect(() => {
+    if (Array.isArray(initialCategories) && initialCategories.length > 0) {
+      setCategoriesList(initialCategories);
+    } else {
+      getCategoriesFromServer()
+        .then((res) => {
+          if (res?.success && Array.isArray(res?.data)) {
+            setCategoriesList(res.data);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [initialCategories]);
+
+  const navCategories = useMemo(() => {
+    if (!Array.isArray(categoriesList) || categoriesList.length === 0) {
+      return defaultCategories.map((c) => ({
+        id: c.id,
+        name: c.name,
+        slug: c.slug,
+        subcategories: []
+      }));
+    }
+
+    return categoriesList.map((c) => ({
+      id: c.category_id || c.id,
+      name: c.name,
+      slug: slugifyProductName(c.name),
+      subcategories: Array.isArray(c.sub_category)
+        ? c.sub_category.map((s) => ({
+            id: s.id,
+            name: s.name,
+            slug: slugifyProductName(s.name)
+          }))
+        : []
+    }));
+  }, [categoriesList]);
 
   // Close menu on route change
   useEffect(() => {
@@ -84,16 +129,71 @@ export default function MobileMenuDrawer() {
             >
               All Tech & Gadgets
             </Link>
-            {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/category/${cat.slug}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-sm text-[#9aa3af] hover:text-[#c45c5c] hover:bg-[#1c1f26] transition-colors"
-              >
-                {cat.name}
-              </Link>
-            ))}
+            {navCategories.map((cat) => {
+              const hasSubs = cat.subcategories.length > 0;
+              const isExpanded = expandedCat === cat.id;
+
+              if (!hasSubs) {
+                return (
+                  <Link
+                    key={cat.id}
+                    href={`/category/${cat.slug}`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-3 py-2 rounded-xl text-sm text-[#9aa3af] hover:text-[#c45c5c] hover:bg-[#1c1f26] transition-colors"
+                  >
+                    {cat.name}
+                  </Link>
+                );
+              }
+
+              return (
+                <div key={cat.id} className="space-y-0.5">
+                  <div className="flex items-center justify-between rounded-xl hover:bg-[#1c1f26] transition-colors">
+                    <Link
+                      href={`/category/${cat.slug}`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex-1 px-3 py-2 text-sm text-[#9aa3af] hover:text-[#c45c5c] font-medium transition-colors"
+                    >
+                      {cat.name}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setExpandedCat(isExpanded ? null : cat.id)}
+                      className="p-2 text-[#6b7280] hover:text-[#e8eaed] cursor-pointer"
+                      aria-label={`Toggle ${cat.name} subcategories`}
+                    >
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-200 ${
+                          isExpanded ? "rotate-180 text-[#c45c5c]" : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {isExpanded && (
+                    <div className="pl-4 pr-1 py-1 space-y-1 bg-[#101317] rounded-xl border border-[#2a2e37]/50 ml-2">
+                      <Link
+                        href={`/category/${cat.slug}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block px-3 py-1.5 rounded-lg text-xs font-bold text-[#e8eaed] hover:text-[#c45c5c]"
+                      >
+                        All {cat.name}
+                      </Link>
+                      {cat.subcategories.map((sub) => (
+                        <Link
+                          key={sub.id}
+                          href={`/category/${cat.slug}?sub=${sub.id}`}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block px-3 py-1.5 rounded-lg text-xs text-[#9aa3af] hover:text-[#e8eaed] hover:bg-[#1c1f26] transition-colors"
+                        >
+                          {sub.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Special Programs */}

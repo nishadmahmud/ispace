@@ -203,11 +203,6 @@ export default function Footer() {
                   Gaming & Drones
                 </Link>
               </li>
-              <li>
-                <Link href="/category/pre-owned" className="text-emerald-400 hover:text-emerald-300 font-bold transition-colors">
-                  iSPACE Recell Pre-Owned
-                </Link>
-              </li>
             </ul>
           </div>
 

@@ -6,10 +6,18 @@ import FlashDeals from "@/components/home/FlashDeals";
 import PromoBanners from "@/components/home/PromoBanners";
 import ProductRail from "@/components/home/ProductRail";
 import AppleShowcase from "@/components/home/AppleShowcase";
-import CertifiedPreOwned from "@/components/home/CertifiedPreOwned";
 import BrandBar from "@/components/home/BrandBar";
 import ShowroomsSection from "@/components/home/ShowroomsSection";
-import { products } from "@/data/products";
+import { products as fallbackProducts } from "@/data/products";
+import {
+  getCategoriesFromServer,
+  getSlidersFromServer,
+  getNewArrivalsFromServer,
+  getBestDealsFromServer,
+  getBestSellersFromServer
+} from "@/lib/api";
+import { mapProductList } from "@/lib/productMapping";
+import { slugifyProductName } from "@/lib/productSlug";
 
 export const metadata = {
   title: "iSPACE BD | Premier Apple & Tech Gadget Store in Bangladesh",
@@ -17,24 +25,88 @@ export const metadata = {
     "Explore official Apple flagships, iPhones, MacBooks, Samsung, smartwatches, and tech accessories with official warranty and 0% EMI up to 36 months in Bangladesh.",
 };
 
-export default function HomePage() {
-  const trending = products.filter((p) => p.featured && !p.isPreOwned);
-  const newArrivals = [...products]
-    .filter((p) => p.isNew && !p.isPreOwned)
-    .sort((a, b) => b.reviewCount - a.reviewCount);
-  const popular = [...products]
-    .filter((p) => !p.isPreOwned)
-    .sort((a, b) => b.reviewCount - a.reviewCount);
-  const hotDeals = products.filter(
-    (p) => p.regularPrice > p.price && !p.isPreOwned
-  );
+export const revalidate = 120;
+
+export default async function HomePage() {
+  const [
+    categoriesRes,
+    slidersRes,
+    newArrivalsRes,
+    bestDealsRes,
+    bestSellersRes
+  ] = await Promise.all([
+    getCategoriesFromServer().catch(() => ({ success: false })),
+    getSlidersFromServer().catch(() => ({ success: false })),
+    getNewArrivalsFromServer().catch(() => ({ success: false })),
+    getBestDealsFromServer().catch(() => ({ success: false })),
+    getBestSellersFromServer().catch(() => ({ success: false }))
+  ]);
+
+  // Sliders mapping
+  const mappedSliders =
+    Array.isArray(slidersRes?.sliders) && slidersRes.sliders.length > 0
+      ? slidersRes.sliders.map((s, idx) => {
+          let href = "/shop";
+          if (s.product_id) {
+            href = `/product/${s.product_id}`;
+          } else if (s.link) {
+            try {
+              const url = new URL(s.link);
+              href = url.pathname;
+            } catch {
+              href = s.link;
+            }
+          }
+          return {
+            id: s.id || idx + 1,
+            title: s.title || "Special Offer",
+            href,
+            image: s.image_path,
+            alt: s.title || "Banner",
+          };
+        })
+      : null;
+
+  // Categories mapping
+  const mappedCategories =
+    Array.isArray(categoriesRes?.data) && categoriesRes.data.length > 0
+      ? categoriesRes.data.map((c) => ({
+          id: c.category_id,
+          name: c.name,
+          slug: slugifyProductName(c.name),
+          image: c.image_url || c.banner || "/icon.png",
+          banner: c.banner || c.image_url || "/icon.png",
+          count: `${c.products_count || 0}+ Models`,
+        }))
+      : null;
+
+  // Products mapping
+  const apiNewArrivals = mapProductList(newArrivalsRes?.data?.data);
+  const apiBestDeals = mapProductList(bestDealsRes?.data);
+  const apiBestSellers = mapProductList(bestSellersRes?.data);
+
+  const newArrivals = apiNewArrivals.length > 0
+    ? apiNewArrivals
+    : fallbackProducts.filter((p) => p.isNew && !p.isPreOwned);
+
+  const hotDeals = apiBestDeals.length > 0
+    ? apiBestDeals
+    : fallbackProducts.filter((p) => p.isFlashDeal || (p.regularPrice > p.price && !p.isPreOwned));
+
+  const trending = apiBestSellers.length > 0
+    ? apiBestSellers
+    : fallbackProducts.filter((p) => p.featured && !p.isPreOwned);
+
+  const popular = apiBestSellers.length > 0
+    ? apiBestSellers
+    : [...fallbackProducts].sort((a, b) => b.reviewCount - a.reviewCount);
 
   return (
     <div className="min-h-screen text-[#e8eaed] flex flex-col">
-      <HeroBanner />
+      <HeroBanner slides={mappedSliders} />
       <AnnouncementMarquee />
-      <CategoryGrid />
-      <FlashDeals />
+      <CategoryGrid categories={mappedCategories} />
+      <FlashDeals items={hotDeals} />
       <PromoBanners />
       <ProductRail
         title="Trending Now"
@@ -54,7 +126,7 @@ export default function HomePage() {
         title="New Arrivals"
         subtitle="Fresh stock just landed"
         seeAllHref="/shop"
-        products={newArrivals.length ? newArrivals : products}
+        products={newArrivals}
         limit={5}
         tabs={[
           { id: "newest", label: "Newest" },
@@ -78,7 +150,6 @@ export default function HomePage() {
         limit={5}
         lifted
       />
-      <CertifiedPreOwned />
       <ShowroomsSection />
     </div>
   );

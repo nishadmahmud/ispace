@@ -1,13 +1,16 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/common/Logo";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import { useStore } from "@/context/StoreContext";
-import { products, categories } from "@/data/products";
+import { products, categories as defaultCategories } from "@/data/products";
 import { formatBDT } from "@/data/emi-banks";
+import { searchProducts, getCategoriesFromServer } from "@/lib/api";
+import { mapProductList } from "@/lib/productMapping";
+import { slugifyProductName } from "@/lib/productSlug";
 import {
   Search,
   ShoppingBag,
@@ -20,13 +23,32 @@ import {
   X,
   RotateCcw,
   Flame,
-  Truck
+  Truck,
+  ChevronDown
 } from "lucide-react";
 
-export default function Header() {
+export default function Header({ initialCategories = [] }) {
   const pathname = usePathname();
   const router = useRouter();
   const { cartCount, setIsCartOpen, wishlist, compare, setIsMobileMenuOpen } = useStore();
+
+  const [categoriesList, setCategoriesList] = useState(
+    Array.isArray(initialCategories) && initialCategories.length > 0 ? initialCategories : []
+  );
+
+  useEffect(() => {
+    if (Array.isArray(initialCategories) && initialCategories.length > 0) {
+      setCategoriesList(initialCategories);
+    } else {
+      getCategoriesFromServer()
+        .then((res) => {
+          if (res?.success && Array.isArray(res?.data)) {
+            setCategoriesList(res.data);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [initialCategories]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -47,14 +69,33 @@ export default function Header() {
       setSearchResults([]);
       return;
     }
-    const q = searchQuery.toLowerCase();
-    const filtered = products.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.brand.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q)
-    ).slice(0, 5);
-    setSearchResults(filtered);
+    const timer = setTimeout(async () => {
+      try {
+        const res = await searchProducts(searchQuery);
+        const list = res?.data || res?.products || [];
+        if (Array.isArray(list) && list.length > 0) {
+          setSearchResults(mapProductList(list.slice(0, 6)));
+        } else {
+          const q = searchQuery.toLowerCase();
+          const filtered = products.filter(
+            (p) =>
+              p.name.toLowerCase().includes(q) ||
+              p.brand.toLowerCase().includes(q) ||
+              p.category.toLowerCase().includes(q)
+          ).slice(0, 6);
+          setSearchResults(filtered);
+        }
+      } catch (err) {
+        const q = searchQuery.toLowerCase();
+        const filtered = products.filter(
+          (p) =>
+            p.name.toLowerCase().includes(q) ||
+            p.brand.toLowerCase().includes(q)
+        ).slice(0, 6);
+        setSearchResults(filtered);
+      }
+    }, 250);
+    return () => clearTimeout(timer);
   }, [searchQuery]);
 
   useEffect(() => {
@@ -73,8 +114,32 @@ export default function Header() {
     setIsSearchFocused(false);
   }, [pathname]);
 
-  // Exclude pre-owned from main categories map since it has its own dedicated highlight spot
-  const navCategories = categories.filter((c) => c.slug !== "pre-owned");
+  const navCategories = useMemo(() => {
+    if (!Array.isArray(categoriesList) || categoriesList.length === 0) {
+      return defaultCategories.filter((c) => c.slug !== "pre-owned").map((c) => ({
+        id: c.id,
+        name: c.name,
+        slug: c.slug,
+        subcategories: []
+      }));
+    }
+
+    return categoriesList.map((c) => ({
+      id: c.category_id || c.id,
+      name: c.name,
+      slug: slugifyProductName(c.name),
+      subcategories: Array.isArray(c.sub_category)
+        ? c.sub_category.map((s) => ({
+            id: s.id,
+            name: s.name,
+            slug: slugifyProductName(s.name)
+          }))
+        : []
+    }));
+  }, [categoriesList]);
+
+  const primaryCategories = navCategories.slice(0, 7);
+  const moreCategories = navCategories.slice(7);
 
   return (
     <header className="sticky top-0 z-40 w-full bg-[#12151a]/90 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_12px_40px_rgba(0,0,0,0.45)]">
@@ -183,7 +248,7 @@ export default function Header() {
                       className="p-2.5 flex items-center gap-3 hover:bg-[#1c1f26] transition-colors"
                     >
                       <img
-                        src={item.images[0]}
+                        src={item.images?.[0] || "/icon.png"}
                         alt={item.name}
                         className="w-10 h-10 object-contain p-1 rounded-md bg-[#1c1f26] border border-[#2a2e37] shrink-0"
                       />
@@ -192,7 +257,7 @@ export default function Header() {
                           {item.name}
                         </p>
                         <p className="text-[10px] text-[#6b7280] mt-0.5">
-                          {item.brand} • <span>{item.categoryName}</span>
+                          {item.brand} • <span>{item.categoryName || item.category || "Gadget"}</span>
                         </p>
                       </div>
                       <div className="text-right">
@@ -304,7 +369,7 @@ export default function Header() {
                     className="p-2.5 flex items-center gap-3 hover:bg-[#1c1f26] transition-colors"
                   >
                     <img
-                      src={item.images[0]}
+                      src={item.images?.[0] || "/icon.png"}
                       alt={item.name}
                       className="w-10 h-10 object-cover rounded-md bg-[#1c1f26] border border-[#2a2e37] shrink-0"
                     />
@@ -313,7 +378,7 @@ export default function Header() {
                         {item.name}
                       </p>
                       <p className="text-[10px] text-[#6b7280] mt-0.5">
-                        {item.brand} • <span>{item.categoryName}</span>
+                        {item.brand} • <span>{item.categoryName || item.category || "Gadget"}</span>
                       </p>
                     </div>
                     <div className="text-right">
@@ -352,32 +417,91 @@ export default function Header() {
                 All Products
               </Link>
             </li>
-            {navCategories.map((cat) => (
-              <li key={cat.id}>
-                <Link
-                  href={`/category/${cat.slug}`}
-                  className={`py-1 px-2 transition-colors ${
-                    pathname === `/category/${cat.slug}`
-                      ? "text-[#e8eaed] font-bold"
-                      : "hover:text-[#e8eaed]"
-                  }`}
+            {primaryCategories.map((cat) => {
+              const hasSubs = cat.subcategories.length > 0;
+              const isActive = pathname === `/category/${cat.slug}`;
+
+              if (!hasSubs) {
+                return (
+                  <li key={cat.id}>
+                    <Link
+                      href={`/category/${cat.slug}`}
+                      className={`py-1 px-2 transition-colors ${
+                        isActive ? "text-[#e8eaed] font-bold" : "hover:text-[#e8eaed]"
+                      }`}
+                    >
+                      {cat.name}
+                    </Link>
+                  </li>
+                );
+              }
+
+              return (
+                <li key={cat.id} className="relative group">
+                  <Link
+                    href={`/category/${cat.slug}`}
+                    className={`py-1 px-2 inline-flex items-center gap-1 transition-colors ${
+                      isActive ? "text-[#e8eaed] font-bold" : "hover:text-[#e8eaed]"
+                    }`}
+                  >
+                    <span>{cat.name}</span>
+                    <ChevronDown className="w-3 h-3 opacity-60 group-hover:rotate-180 transition-transform duration-200" />
+                  </Link>
+
+                  {/* Dropdown Menu on Hover */}
+                  <div className="absolute top-full left-0 pt-2 hidden group-hover:block z-50 animate-in fade-in duration-150">
+                    <div className="min-w-[190px] max-w-xs rounded-2xl bg-[#14171c]/95 backdrop-blur-xl border border-[#2a2e37] shadow-[0_16px_36px_rgba(0,0,0,0.5)] p-2">
+                      <div className="text-[10px] font-bold text-[#6b7280] uppercase tracking-wider px-3 py-1.5 border-b border-[#2a2e37]/60 mb-1">
+                        {cat.name} Brands
+                      </div>
+                      <div className="max-h-72 overflow-y-auto no-scrollbar space-y-0.5">
+                        <Link
+                          href={`/category/${cat.slug}`}
+                          className="block px-3 py-1.5 rounded-xl text-xs font-bold text-[#e8eaed] hover:bg-[#1c1f26] hover:text-[#c45c5c] transition-colors"
+                        >
+                          All {cat.name}
+                        </Link>
+                        {cat.subcategories.map((sub) => (
+                          <Link
+                            key={sub.id}
+                            href={`/category/${cat.slug}?sub=${sub.id}`}
+                            className="block px-3 py-1.5 rounded-xl text-xs text-[#9aa3af] hover:text-[#e8eaed] hover:bg-[#1c1f26] transition-colors"
+                          >
+                            {sub.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+
+            {moreCategories.length > 0 && (
+              <li className="relative group">
+                <button
+                  type="button"
+                  className="py-1 px-2 inline-flex items-center gap-1 text-[#9aa3af] hover:text-[#e8eaed] transition-colors cursor-pointer"
                 >
-                  {cat.name}
-                </Link>
+                  <span>More</span>
+                  <ChevronDown className="w-3 h-3 opacity-60 group-hover:rotate-180 transition-transform duration-200" />
+                </button>
+                <div className="absolute top-full right-0 pt-2 hidden group-hover:block z-50 animate-in fade-in duration-150">
+                  <div className="w-52 rounded-2xl bg-[#14171c]/95 backdrop-blur-xl border border-[#2a2e37] shadow-[0_16px_36px_rgba(0,0,0,0.5)] p-2 space-y-0.5 max-h-80 overflow-y-auto no-scrollbar">
+                    {moreCategories.map((m) => (
+                      <Link
+                        key={m.id}
+                        href={`/category/${m.slug}`}
+                        className="block px-3 py-2 rounded-xl text-xs font-semibold text-[#9aa3af] hover:text-[#e8eaed] hover:bg-[#1c1f26] transition-colors"
+                      >
+                        {m.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               </li>
-            ))}
-            <li>
-              <Link
-                href="/category/pre-owned"
-                className={`py-1 px-2 transition-colors ${
-                  pathname === "/category/pre-owned"
-                    ? "text-[#e8eaed] font-bold"
-                    : "hover:text-[#e8eaed]"
-                }`}
-              >
-                Certified Pre-Owned
-              </Link>
-            </li>
+            )}
+
             <li>
               <Link
                 href="/shop?deal=flash"

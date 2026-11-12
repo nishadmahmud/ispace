@@ -3,17 +3,53 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { formatBDT } from "@/data/emi-banks";
-import { Search, Phone, Truck } from "lucide-react";
+import { Search, Phone, Truck, Loader2 } from "lucide-react";
+import { trackOrder } from "@/lib/api";
 
 export default function TrackOrderPage() {
   const [orderId, setOrderId] = useState("");
   const [phone, setPhone] = useState("");
   const [foundOrder, setFoundOrder] = useState(null);
   const [searched, setSearched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleTrack = (e) => {
+  const handleTrack = async (e) => {
     e.preventDefault();
     setSearched(true);
+    setIsLoading(true);
+
+    try {
+      const apiRes = await trackOrder({ invoice_id: orderId.trim(), phone: phone.trim() });
+      if (apiRes && apiRes.success && (apiRes.data || apiRes.invoice)) {
+        const inv = apiRes.data || apiRes.invoice;
+        setFoundOrder({
+          orderId: inv.invoice_id || orderId.trim(),
+          createdAt: inv.created_at || new Date().toISOString(),
+          customer: {
+            fullName: inv.delivery_customer_name || inv.customer_name || "Valued Customer",
+            phone: inv.delivery_customer_phone || inv.customer_phone || phone,
+            address: inv.delivery_customer_address || inv.detailed_address || "Dhaka, Bangladesh",
+          },
+          items: Array.isArray(inv.product)
+            ? inv.product.map((p) => ({
+                cartKey: p.product_id,
+                product: { name: p.name || p.product_name || `Item #${p.product_id}` },
+                qty: p.qty || 1,
+                unitPrice: p.price || 0,
+                options: { storage: p.size || "Standard", color: p.color || "Standard" }
+              }))
+            : [],
+          total: inv.total_amount || inv.sub_total || 0,
+          paymentMethod: inv.pay_mode || "Cash on Delivery",
+          serverStatus: inv.status_text || (inv.status === 1 ? "Order Confirmed" : "Processing Dispatch")
+        });
+        setIsLoading(false);
+        return;
+      }
+    } catch (err) {
+      console.warn("Server tracking check fallback to local storage:", err);
+    }
+
     try {
       const saved = localStorage.getItem(`ispace_order_${orderId.trim()}`);
       if (saved) {
@@ -23,6 +59,8 @@ export default function TrackOrderPage() {
       }
     } catch (e) {
       setFoundOrder(null);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -82,9 +120,18 @@ export default function TrackOrderPage() {
             <div className="sm:col-span-12 pt-2">
               <button
                 type="submit"
-                className="w-full h-11 rounded-xl bg-[#c45c5c] hover:bg-[#a84848] text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md shadow-black/40"
+                disabled={isLoading}
+                className="w-full h-11 rounded-xl bg-[#c45c5c] hover:bg-[#a84848] disabled:opacity-60 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md shadow-black/40 cursor-pointer"
               >
-                <Search className="w-4 h-4" /> Track Parcel Now
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" /> Searching Courier Records...
+                  </>
+                ) : (
+                  <>
+                    <Search className="w-4 h-4" /> Track Parcel Now
+                  </>
+                )}
               </button>
             </div>
           </form>
@@ -100,7 +147,7 @@ export default function TrackOrderPage() {
                       <strong className="text-[#e8eaed] font-mono">{foundOrder.orderId}</strong>
                     </div>
                     <span className="text-emerald-400 font-black px-2 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/25">
-                      Processing Dispatch
+                      {foundOrder.serverStatus || "Processing Dispatch"}
                     </span>
                   </div>
 

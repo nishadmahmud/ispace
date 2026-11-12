@@ -7,6 +7,10 @@ import { RotateCcw, ShieldCheck, BatteryCharging, CheckCircle2, ArrowRight } fro
 export default function CertifiedPreOwned() {
   const preOwnedItems = products.filter((p) => p.isPreOwned);
 
+  if (!preOwnedItems.length) {
+    return null;
+  }
+
   return (
     <section className="py-14 section-lifted">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

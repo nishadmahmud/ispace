@@ -1,9 +1,10 @@
 import React from "react";
 import Link from "next/link";
-import { categories } from "@/data/products";
+import { categories as defaultCategories } from "@/data/products";
 import { ArrowRight } from "lucide-react";
 
-export default function CategoryGrid() {
+export default function CategoryGrid({ categories }) {
+  const activeCategories = Array.isArray(categories) && categories.length > 0 ? categories : defaultCategories;
   return (
     <section className="py-10 section-canvas">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,7 +24,7 @@ export default function CategoryGrid() {
         </div>
 
         <div className="flex overflow-x-auto no-scrollbar gap-3 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-4 lg:grid-cols-7 sm:gap-4">
-          {categories.map((cat) => (
+          {activeCategories.map((cat) => (
             <Link
               key={cat.id}
               href={`/category/${cat.slug}`}

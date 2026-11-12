@@ -11,7 +11,10 @@ import {
   Search
 } from "lucide-react";
 
-export default function ShopClient() {
+export default function ShopClient({ initialProducts, initialCategories }) {
+  const productList = Array.isArray(initialProducts) && initialProducts.length > 0 ? initialProducts : products;
+  const categoryList = Array.isArray(initialCategories) && initialCategories.length > 0 ? initialCategories : categories;
+
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "";
   const initialBrand = searchParams.get("brand") || "";
@@ -29,18 +32,19 @@ export default function ShopClient() {
 
   // Filter products
   const filteredProducts = useMemo(() => {
-    return products
+    return productList
       .filter((item) => {
-        if (selectedCategory && item.category !== selectedCategory) return false;
+        if (selectedCategory && item.category !== selectedCategory && item.categorySlug !== selectedCategory) return false;
         if (selectedBrand && item.brand !== selectedBrand) return false;
         if (onlyInStock && !item.inStock) return false;
-        if (onlyFlashDeals && !item.isFlashDeal) return false;
+        if (onlyFlashDeals && !item.isFlashDeal && !item.badge) return false;
         if (item.price > maxPrice) return false;
         if (searchTerm.trim()) {
           const q = searchTerm.toLowerCase();
-          const matchName = item.name.toLowerCase().includes(q);
-          const matchBrand = item.brand.toLowerCase().includes(q);
-          const matchCat = item.categoryName.toLowerCase().includes(q);
+          const matchName = item.name?.toLowerCase().includes(q);
+          const matchBrand = item.brand?.toLowerCase().includes(q);
+          const catName = (item.categoryName || item.category || "").toLowerCase();
+          const matchCat = catName.includes(q);
           if (!matchName && !matchBrand && !matchCat) return false;
         }
         return true;
@@ -48,10 +52,10 @@ export default function ShopClient() {
       .sort((a, b) => {
         if (sortBy === "price-low") return a.price - b.price;
         if (sortBy === "price-high") return b.price - a.price;
-        if (sortBy === "rating") return b.rating - a.rating;
+        if (sortBy === "rating") return (b.rating || 0) - (a.rating || 0);
         return 0; // featured default
       });
-  }, [selectedCategory, selectedBrand, onlyInStock, onlyFlashDeals, maxPrice, searchTerm, sortBy]);
+  }, [productList, selectedCategory, selectedBrand, onlyInStock, onlyFlashDeals, maxPrice, searchTerm, sortBy]);
 
   const clearAllFilters = () => {
     setSelectedCategory("");
@@ -222,9 +226,9 @@ export default function ShopClient() {
                   }`}
                 >
                   <span>All Categories</span>
-                  <span>{products.length}</span>
+                  <span>{productList.length}</span>
                 </button>
-                {categories.map((c) => (
+                {categoryList.map((c) => (
                   <button
                     key={c.id}
                     onClick={() => setSelectedCategory(c.slug)}
@@ -391,7 +395,7 @@ export default function ShopClient() {
                   >
                     All Categories
                   </button>
-                  {categories.map((c) => (
+                  {categoryList.map((c) => (
                     <button
                       key={c.id}
                       onClick={() => {

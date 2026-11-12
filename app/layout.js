@@ -8,6 +8,7 @@ import CartDrawer from "@/components/layout/CartDrawer";
 import ToastContainer from "@/components/layout/Toast";
 import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import MobileMenuDrawer from "@/components/layout/MobileMenuDrawer";
+import { getCategoriesFromServer } from "@/lib/api";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,15 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  let categories = [];
+  try {
+    const res = await getCategoriesFromServer();
+    if (res?.success && Array.isArray(res?.data)) {
+      categories = res.data;
+    }
+  } catch (err) {}
+
   return (
     <html
       lang="en"
@@ -76,11 +85,11 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col bg-[#0c0e12] text-[#e8eaed] selection:bg-[#c45c5c] selection:text-white">
         <ThemeProvider>
           <StoreProvider>
-            <Header />
+            <Header initialCategories={categories} />
             <main className="flex-1 pb-24 lg:pb-0">{children}</main>
             <Footer />
             <MobileBottomNav />
-            <MobileMenuDrawer />
+            <MobileMenuDrawer initialCategories={categories} />
             <CartDrawer />
             <ToastContainer />
           </StoreProvider>

@@ -5,12 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
 import { formatBDT, emiBanks } from "@/data/emi-banks";
+import { saveSalesOrder } from "@/lib/api";
 import {
   Truck,
   CreditCard,
   ShoppingBag,
   MapPin,
-  Lock
+  Lock,
+  Banknote
 } from "lucide-react";
 
 const bdDivisions = [
@@ -52,7 +54,7 @@ export default function CheckoutPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
     if (!formData.fullName.trim() || !formData.phone.trim() || !formData.address.trim()) {
       showToast("Please fill in your name, phone number, and address", "warning");
@@ -66,7 +68,51 @@ export default function CheckoutPage() {
 
     setIsSubmitting(true);
 
-    const orderId = `ISP-${Math.floor(100000 + Math.random() * 900000)}`;
+    const orderPayload = {
+      pay_mode: paymentMethod === "cod" ? "Cash on Delivery" : paymentMethod === "bkash" ? "bKash" : "EMI",
+      paid_amount: 0,
+      user_id: process.env.NEXT_PUBLIC_USER_ID || "365",
+      sub_total: cartTotal,
+      vat: 0,
+      tax: 0,
+      discount: 0,
+      product: cart.map((item) => ({
+        product_id: item.product?.id || item.id,
+        qty: item.qty || 1,
+        price: item.unitPrice || item.price,
+        mode: 1,
+        size: item.options?.storage || "Standard",
+        sales_id: process.env.NEXT_PUBLIC_USER_ID || "365",
+      })),
+      delivery_method_id: 1,
+      delivery_info_id: 1,
+      delivery_customer_name: formData.fullName,
+      delivery_customer_address: `${formData.address}, ${formData.district}, ${formData.division}`,
+      delivery_customer_phone: formData.phone,
+      delivery_fee: shippingCost,
+      variants: [],
+      created_at: new Date().toISOString(),
+      customer_name: formData.fullName,
+      customer_phone: formData.phone,
+      sales_id: process.env.NEXT_PUBLIC_USER_ID || "365",
+      wholeseller_id: 1,
+      status: 1,
+      delivery_city: formData.district,
+      delivery_district: formData.division,
+      detailed_address: formData.address,
+    };
+
+    let orderId = `ISP-${Math.floor(100000 + Math.random() * 900000)}`;
+
+    try {
+      const response = await saveSalesOrder(orderPayload);
+      if (response && (response.success || response.invoice_id || response.data?.invoice_id)) {
+        orderId = response.invoice_id || response.data?.invoice_id || orderId;
+      }
+    } catch (err) {
+      console.warn("Failed to submit order to API, storing locally:", err);
+    }
+
     const orderData = {
       orderId,
       customer: formData,
@@ -86,11 +132,10 @@ export default function CheckoutPage() {
       localStorage.setItem("ispace_last_order", orderId);
     } catch (err) {}
 
-    setTimeout(() => {
-      clearCart();
-      setIsSubmitting(false);
-      router.push(`/order-success/${orderId}`);
-    }, 1200);
+    clearCart();
+    setIsSubmitting(false);
+    showToast("Order placed successfully!", "success");
+    router.push(`/order-success/${orderId}`);
   };
 
   if (cart.length === 0) {
@@ -317,138 +362,41 @@ export default function CheckoutPage() {
                 <CreditCard className="w-4 h-4 text-[#c45c5c]" /> 3. Select Payment Method
               </h2>
 
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                {/* Cash on Delivery */}
                 <button
                   type="button"
                   onClick={() => setPaymentMethod("cod")}
-                  className={`p-3.5 rounded-2xl border text-center font-bold transition-all ${
+                  className={`p-4 rounded-2xl border text-center font-bold transition-all ${
                     paymentMethod === "cod"
-                      ? "bg-[#c45c5c]/10 border-[#c45c5c] text-[#c45c5c] ring-1 ring-[#c45c5c]"
+                      ? "bg-[#c45c5c]/10 border-[#c45c5c] text-[#e8eaed] ring-1 ring-[#c45c5c]"
                       : "bg-[#1c1f26] border-[#2a2e37] text-[#9aa3af] hover:text-[#e8eaed] hover:bg-[#1c1f26]"
                   }`}
                 >
-                  <span className="block text-emerald-400 mb-1">💵</span>
-                  Cash on Delivery
+                  <Banknote className="w-5 h-5 mx-auto mb-1.5 text-emerald-400" />
+                  <span className="block text-sm font-bold text-[#e8eaed]">Cash on Delivery</span>
+                  <span className="block text-[11px] text-[#9aa3af] font-medium mt-0.5">Pay upon delivery</span>
                 </button>
 
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("bkash")}
-                  className={`p-3.5 rounded-2xl border text-center font-bold transition-all ${
-                    paymentMethod === "bkash"
-                      ? "bg-pink-500/10 border-[#c45c5c] text-pink-400 ring-1 ring-[#c45c5c]"
-                      : "bg-[#1c1f26] border-[#2a2e37] text-[#9aa3af] hover:text-[#e8eaed] hover:bg-[#1c1f26]"
-                  }`}
+                {/* SSL / Online Payment - Grayed out & Coming Soon */}
+                <div
+                  className="p-4 rounded-2xl border border-[#2a2e37] bg-[#1c1f26]/40 text-center font-bold opacity-50 cursor-not-allowed select-none relative"
                 >
-                  <span className="block text-pink-400 mb-1 font-black">bKash</span>
-                  Online / App
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("nagad")}
-                  className={`p-3.5 rounded-2xl border text-center font-bold transition-all ${
-                    paymentMethod === "nagad"
-                      ? "bg-orange-500/10 border-[#c45c5c] text-orange-400 ring-1 ring-[#c45c5c]"
-                      : "bg-[#1c1f26] border-[#2a2e37] text-[#9aa3af] hover:text-[#e8eaed] hover:bg-[#1c1f26]"
-                  }`}
-                >
-                  <span className="block text-orange-400 mb-1 font-black">Nagad</span>
-                  Online / App
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("card")}
-                  className={`p-3.5 rounded-2xl border text-center font-bold transition-all ${
-                    paymentMethod === "card"
-                      ? "bg-sky-500/10 border-[#c45c5c] text-sky-400 ring-1 ring-[#c45c5c]"
-                      : "bg-[#1c1f26] border-[#2a2e37] text-[#9aa3af] hover:text-[#e8eaed] hover:bg-[#1c1f26]"
-                  }`}
-                >
-                  <span className="block text-sky-400 mb-1">💳</span>
-                  Debit / Credit Card
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("emi")}
-                  className={`p-3.5 rounded-2xl border text-center font-bold transition-all ${
-                    paymentMethod === "emi"
-                      ? "bg-amber-500/10 border-[#c45c5c] text-amber-400 ring-1 ring-[#c45c5c]"
-                      : "bg-[#1c1f26] border-[#2a2e37] text-[#9aa3af] hover:text-[#e8eaed] hover:bg-[#1c1f26]"
-                  }`}
-                >
-                  <span className="block text-amber-400 mb-1">🏦</span>
-                  0% EMI Facility
-                </button>
+                  <CreditCard className="w-5 h-5 mx-auto mb-1.5 text-[#6b7280]" />
+                  <div className="flex items-center justify-center gap-1.5">
+                    <span className="text-sm font-bold text-[#9aa3af]">SSLCommerz</span>
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#2a2e37] text-[#9aa3af] uppercase tracking-wider">
+                      Coming Soon
+                    </span>
+                  </div>
+                  <span className="block text-[11px] text-[#6b7280] font-medium mt-0.5">Card / Mobile Banking</span>
+                </div>
               </div>
 
               {/* Conditional Payment UI */}
-              {paymentMethod === "bkash" && (
-                <div className="p-4 rounded-2xl bg-pink-500/10 border border-pink-500/25 text-xs space-y-3">
-                  <p className="text-[#e8eaed]">
-                    Send Payment to <strong>iSPACE BD Merchant bKash</strong> Number: <strong className="text-pink-400">01700-477223</strong> (Make Payment).
-                  </p>
-                  <div>
-                    <label className="block text-[11px] font-bold text-[#9aa3af] mb-1">
-                      Enter bKash Transaction ID (TrxID)
-                    </label>
-                    <input
-                      type="text"
-                      value={bkashTrxId}
-                      onChange={(e) => setBkashTrxId(e.target.value)}
-                      placeholder="e.g. BIK9283921"
-                      className="w-full h-9 px-3 rounded-xl bg-[#14171c] border border-[#2a2e37] text-xs text-[#e8eaed]"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {paymentMethod === "emi" && (
-                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-xs space-y-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-[11px] font-bold text-[#9aa3af] mb-1">
-                        Bank Name
-                      </label>
-                      <select
-                        value={selectedEmiBank}
-                        onChange={(e) => setSelectedEmiBank(e.target.value)}
-                        className="w-full bg-[#14171c] border border-[#2a2e37] rounded-xl px-3 py-2 text-xs text-[#e8eaed] font-bold"
-                      >
-                        {emiBanks.map((b) => (
-                          <option key={b.id} value={b.id}>
-                            {b.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-bold text-[#9aa3af] mb-1">
-                        Tenure Months
-                      </label>
-                      <select
-                        value={selectedEmiMonths}
-                        onChange={(e) => setSelectedEmiMonths(Number(e.target.value))}
-                        className="w-full bg-[#14171c] border border-[#2a2e37] rounded-xl px-3 py-2 text-xs text-[#e8eaed] font-bold"
-                      >
-                        {[3, 6, 9, 12, 18, 24, 36].map((m) => (
-                          <option key={m} value={m}>
-                            {m} Months (0% Interest)
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <p className="text-[11px] text-amber-400 font-bold">
-                    Monthly Installment: <strong>{formatBDT(Math.ceil(finalTotal / selectedEmiMonths))}</strong>/month
-                  </p>
-                </div>
-              )}
-
               {paymentMethod === "cod" && (
-                <div className="p-4 rounded-2xl bg-[#1c1f26] border border-[#2a2e37] text-xs text-[#9aa3af]">
+                <div className="p-4 rounded-2xl bg-[#1c1f26] border border-[#2a2e37] text-xs text-[#9aa3af] flex items-center gap-3">
+                  <Banknote className="w-5 h-5 text-emerald-400 shrink-0" />
                   <p>
                     Pay cash to the delivery courier after unboxing and verifying your product package.
                   </p>
@@ -521,7 +469,9 @@ export default function CheckoutPage() {
               </button>
 
               <div className="text-[10px] text-[#6b7280] space-y-1 text-center pt-2 font-medium">
-                <p>🔒 256-bit Encrypted Checkout</p>
+                <p className="flex items-center justify-center gap-1.5">
+                  <Lock className="w-3 h-3 text-[#6b7280]" /> 256-bit Encrypted Checkout
+                </p>
                 <p>100% Genuine Guarantee & 7 Days Replacement Policy</p>
               </div>
             </div>

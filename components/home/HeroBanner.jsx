@@ -30,7 +30,8 @@ const bannerSlides = [
   },
 ];
 
-export default function HeroBanner() {
+export default function HeroBanner({ slides }) {
+  const activeSlides = Array.isArray(slides) && slides.length > 0 ? slides : bannerSlides;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef(null);
@@ -39,10 +40,10 @@ export default function HeroBanner() {
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
+      setCurrentSlide((prev) => (prev + 1) % activeSlides.length);
     }, 4500);
     return () => clearInterval(interval);
-  }, [isPaused]);
+  }, [isPaused, activeSlides.length]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -51,14 +52,14 @@ export default function HeroBanner() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [activeSlides.length]);
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + bannerSlides.length) % bannerSlides.length);
+    setCurrentSlide((prev) => (prev - 1 + activeSlides.length) % activeSlides.length);
   };
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
+    setCurrentSlide((prev) => (prev + 1) % activeSlides.length);
   };
 
   const handleTouchStart = (e) => {
@@ -93,7 +94,7 @@ export default function HeroBanner() {
             className="flex h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
-            {bannerSlides.map((slide) => (
+            {activeSlides.map((slide) => (
               <Link
                 key={slide.id}
                 href={slide.href}
@@ -102,7 +103,7 @@ export default function HeroBanner() {
               >
                 <img
                   src={slide.image}
-                  alt={slide.alt}
+                  alt={slide.alt || slide.title || "Banner"}
                   className="w-full h-full object-cover object-center"
                   loading="eager"
                 />
@@ -135,7 +136,7 @@ export default function HeroBanner() {
           </button>
 
           <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 bg-[#0c0e12]/70 backdrop-blur-xs px-2.5 py-1.5 rounded-full border border-[#2a2e37]/50">
-            {bannerSlides.map((_, idx) => (
+            {activeSlides.map((_, idx) => (
               <button
                 key={idx}
                 type="button"

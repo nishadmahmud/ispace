@@ -1,12 +1,34 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { categories, products } from "@/data/products";
+import { categories as fallbackCategories, products as fallbackProducts } from "@/data/products";
 import ProductCard from "@/components/product/ProductCard";
+import {
+  getCategoriesFromServer,
+  getCategoryWiseProducts,
+  getProductsBySubcategory
+} from "@/lib/api";
+import { mapProductList } from "@/lib/productMapping";
+import { slugifyProductName } from "@/lib/productSlug";
+
+export const revalidate = 120;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const category = categories.find((c) => c.slug === slug);
+  const categoriesRes = await getCategoriesFromServer().catch(() => ({ success: false }));
+  const apiCats = Array.isArray(categoriesRes?.data) ? categoriesRes.data : [];
+  const foundApi = apiCats.find(
+    (c) => slugifyProductName(c.name) === slug || String(c.category_id) === slug
+  );
+
+  if (foundApi) {
+    return {
+      title: `${foundApi.name} | iSPACE BD`,
+      description: `Shop authentic ${foundApi.name} with official warranty and 0% EMI at iSPACE BD.`,
+    };
+  }
+
+  const category = fallbackCategories.find((c) => c.slug === slug);
   if (!category) {
     return { title: "Category Not Found | iSPACE BD" };
   }
@@ -16,15 +38,58 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function CategoryPage({ params }) {
+export default async function CategoryPage({ params, searchParams }) {
   const { slug } = await params;
-  const category = categories.find((c) => c.slug === slug);
+  const sParams = await searchParams;
+  const selectedSubId = sParams?.sub ? Number(sParams.sub) : null;
 
-  if (!category) {
-    notFound();
+  const categoriesRes = await getCategoriesFromServer().catch(() => ({ success: false }));
+  const apiCats = Array.isArray(categoriesRes?.data) ? categoriesRes.data : [];
+  const foundApi = apiCats.find(
+    (c) => slugifyProductName(c.name) === slug || String(c.category_id) === slug
+  );
+
+  let categoryName = "";
+  let categoryDesc = "";
+  let categoryProducts = [];
+
+  if (foundApi) {
+    const activeSub = Array.isArray(foundApi.sub_category)
+      ? foundApi.sub_category.find((s) => s.id === selectedSubId)
+      : null;
+
+    categoryName = activeSub ? `${activeSub.name} - ${foundApi.name}` : foundApi.name;
+    categoryDesc = activeSub
+      ? `Explore genuine ${activeSub.name} models under ${foundApi.name} with official warranty and 0% EMI at iSPACE BD.`
+      : `Official ${foundApi.name} flagships, international editions, and verified authentic gadgets at iSPACE BD.`;
+
+    let rawList = [];
+    if (selectedSubId) {
+      const subRes = await getProductsBySubcategory(selectedSubId, 1).catch(() => null);
+      rawList = subRes?.data?.data || subRes?.data || [];
+    }
+    
+    // If no subcategory or subcategory returned empty, load category products
+    if (rawList.length === 0 && !selectedSubId) {
+      const prodRes = await getCategoryWiseProducts(foundApi.category_id, 1).catch(() => null);
+      rawList = prodRes?.data?.data || prodRes?.data || [];
+    }
+
+    categoryProducts = mapProductList(rawList);
   }
 
-  const categoryProducts = products.filter((p) => p.category === slug);
+  // Fallback to static catalog if empty
+  if (categoryProducts.length === 0 && !selectedSubId) {
+    const fallbackCat = fallbackCategories.find((c) => c.slug === slug);
+    if (!fallbackCat && !foundApi) {
+      notFound();
+    }
+    if (fallbackCat) {
+      categoryName = categoryName || fallbackCat.name;
+      categoryDesc = categoryDesc || fallbackCat.description;
+      categoryProducts = fallbackProducts.filter((p) => p.category === slug);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#0c0e12] text-[#e8eaed] py-8">
@@ -39,23 +104,55 @@ export default async function CategoryPage({ params }) {
             Catalog
           </Link>
           <span>/</span>
-          <span className="text-[#e8eaed] font-bold">{category.name}</span>
+          <span className="text-[#e8eaed] font-bold">{categoryName}</span>
         </div>
 
         {/* Hero Category Banner */}
-        <div className="relative rounded-3xl overflow-hidden border border-[#2a2e37] p-6 sm:p-10 mb-10 bg-[#14171c] shadow-xs">
+        <div className="relative rounded-3xl overflow-hidden border border-[#2a2e37] p-6 sm:p-10 mb-6 bg-[#14171c] shadow-xs">
           <div className="max-w-xl space-y-3 relative z-10">
             <span className="px-3 py-1 rounded-full bg-[#c45c5c]/15 text-[#c45c5c] text-[11px] font-black uppercase tracking-wider">
               {categoryProducts.length} Items Available
             </span>
             <h1 className="text-3xl sm:text-4xl font-black text-[#e8eaed] tracking-tight">
-              {category.name}
+              {categoryName}
             </h1>
             <p className="text-xs sm:text-sm text-[#9aa3af] leading-relaxed">
-              {category.description}
+              {categoryDesc}
             </p>
           </div>
         </div>
+
+        {/* Subcategories Filter Pills */}
+        {foundApi && Array.isArray(foundApi.sub_category) && foundApi.sub_category.length > 0 && (
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-8">
+            <Link
+              href={`/category/${slug}`}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 ${
+                !selectedSubId
+                  ? "bg-[#c45c5c] text-white shadow-md shadow-[#c45c5c]/30"
+                  : "bg-[#14171c] border border-[#2a2e37] text-[#9aa3af] hover:text-[#e8eaed] hover:border-[#3d4450]"
+              }`}
+            >
+              All {foundApi.name}
+            </Link>
+            {foundApi.sub_category.map((sub) => {
+              const isSelected = selectedSubId === sub.id;
+              return (
+                <Link
+                  key={sub.id}
+                  href={`/category/${slug}?sub=${sub.id}`}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 ${
+                    isSelected
+                      ? "bg-[#c45c5c] text-white shadow-md shadow-[#c45c5c]/30"
+                      : "bg-[#14171c] border border-[#2a2e37] text-[#9aa3af] hover:text-[#e8eaed] hover:border-[#3d4450]"
+                  }`}
+                >
+                  {sub.name}
+                </Link>
+              );
+            })}
+          </div>
+        )}
 
         {/* Products Grid */}
         {categoryProducts.length === 0 ? (
