@@ -1,6 +1,5 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { products as fallbackProducts } from "@/data/products";
 import ProductDetailClient from "./ProductDetailClient";
 import {
   getProductBySlug,
@@ -28,9 +27,7 @@ export async function generateMetadata({ params }) {
     raw = res?.data;
   }
 
-  const product = raw
-    ? mapApiProductToViewModel(raw)
-    : fallbackProducts.find((p) => p.slug === slug || String(p.id) === slug);
+  const product = raw ? mapApiProductToViewModel(raw) : null;
 
   if (!product) {
     return { title: "Product Not Found | iSPACE BD" };
@@ -55,9 +52,7 @@ export default async function ProductPage({ params }) {
     raw = res?.data;
   }
 
-  const product = raw
-    ? mapApiProductToViewModel(raw)
-    : fallbackProducts.find((p) => p.slug === slug || String(p.id) === slug);
+  const product = raw ? mapApiProductToViewModel(raw) : null;
 
   if (!product) {
     notFound();

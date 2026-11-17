@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { categories as fallbackCategories, products as fallbackProducts } from "@/data/products";
 import ProductCard from "@/components/product/ProductCard";
 import {
   getCategoriesFromServer,
@@ -28,14 +27,7 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const category = fallbackCategories.find((c) => c.slug === slug);
-  if (!category) {
-    return { title: "Category Not Found | iSPACE BD" };
-  }
-  return {
-    title: `${category.name} | iSPACE BD`,
-    description: category.description,
-  };
+  return { title: "Category Not Found | iSPACE BD" };
 }
 
 export default async function CategoryPage({ params, searchParams }) {
@@ -49,47 +41,32 @@ export default async function CategoryPage({ params, searchParams }) {
     (c) => slugifyProductName(c.name) === slug || String(c.category_id) === slug
   );
 
-  let categoryName = "";
-  let categoryDesc = "";
-  let categoryProducts = [];
-
-  if (foundApi) {
-    const activeSub = Array.isArray(foundApi.sub_category)
-      ? foundApi.sub_category.find((s) => s.id === selectedSubId)
-      : null;
-
-    categoryName = activeSub ? `${activeSub.name} - ${foundApi.name}` : foundApi.name;
-    categoryDesc = activeSub
-      ? `Explore genuine ${activeSub.name} models under ${foundApi.name} with official warranty and 0% EMI at iSPACE BD.`
-      : `Official ${foundApi.name} flagships, international editions, and verified authentic gadgets at iSPACE BD.`;
-
-    let rawList = [];
-    if (selectedSubId) {
-      const subRes = await getProductsBySubcategory(selectedSubId, 1).catch(() => null);
-      rawList = subRes?.data?.data || subRes?.data || [];
-    }
-    
-    // If no subcategory or subcategory returned empty, load category products
-    if (rawList.length === 0 && !selectedSubId) {
-      const prodRes = await getCategoryWiseProducts(foundApi.category_id, 1).catch(() => null);
-      rawList = prodRes?.data?.data || prodRes?.data || [];
-    }
-
-    categoryProducts = mapProductList(rawList);
+  if (!foundApi) {
+    notFound();
   }
 
-  // Fallback to static catalog if empty
-  if (categoryProducts.length === 0 && !selectedSubId) {
-    const fallbackCat = fallbackCategories.find((c) => c.slug === slug);
-    if (!fallbackCat && !foundApi) {
-      notFound();
-    }
-    if (fallbackCat) {
-      categoryName = categoryName || fallbackCat.name;
-      categoryDesc = categoryDesc || fallbackCat.description;
-      categoryProducts = fallbackProducts.filter((p) => p.category === slug);
-    }
+  const activeSub = Array.isArray(foundApi.sub_category)
+    ? foundApi.sub_category.find((s) => s.id === selectedSubId)
+    : null;
+
+  const categoryName = activeSub ? `${activeSub.name} - ${foundApi.name}` : foundApi.name;
+  const categoryDesc = activeSub
+    ? `Explore genuine ${activeSub.name} models under ${foundApi.name} with official warranty and 0% EMI at iSPACE BD.`
+    : `Official ${foundApi.name} flagships, international editions, and verified authentic gadgets at iSPACE BD.`;
+
+  let rawList = [];
+  if (selectedSubId) {
+    const subRes = await getProductsBySubcategory(selectedSubId, 1).catch(() => null);
+    rawList = subRes?.data?.data || subRes?.data || [];
   }
+  
+  // If no subcategory or subcategory returned empty, load category products
+  if (rawList.length === 0 && !selectedSubId) {
+    const prodRes = await getCategoryWiseProducts(foundApi.category_id, 1).catch(() => null);
+    rawList = prodRes?.data?.data || prodRes?.data || [];
+  }
+
+  const categoryProducts = mapProductList(rawList);
 
   return (
     <div className="min-h-screen bg-[#0c0e12] text-[#e8eaed] py-8">

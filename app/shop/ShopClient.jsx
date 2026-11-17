@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import { products, categories, brands } from "@/data/products";
 import ProductCard from "@/components/product/ProductCard";
 import { formatBDT } from "@/data/emi-banks";
 import {
@@ -12,8 +11,19 @@ import {
 } from "lucide-react";
 
 export default function ShopClient({ initialProducts, initialCategories }) {
-  const productList = Array.isArray(initialProducts) && initialProducts.length > 0 ? initialProducts : products;
-  const categoryList = Array.isArray(initialCategories) && initialCategories.length > 0 ? initialCategories : categories;
+  const productList = Array.isArray(initialProducts) ? initialProducts : [];
+  const categoryList = Array.isArray(initialCategories) ? initialCategories : [];
+
+  const availableBrands = useMemo(() => {
+    const brandCounts = {};
+    productList.forEach((p) => {
+      const b = (p.brand || "").trim();
+      if (b) {
+        brandCounts[b] = (brandCounts[b] || 0) + 1;
+      }
+    });
+    return Object.entries(brandCounts).map(([name, count]) => ({ name, count }));
+  }, [productList]);
 
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "";
@@ -260,7 +270,7 @@ export default function ShopClient({ initialProducts, initialCategories }) {
                 >
                   <span>All Brands</span>
                 </button>
-                {brands.map((b) => (
+                {availableBrands.map((b) => (
                   <button
                     key={b.name}
                     onClick={() => setSelectedBrand(b.name)}
@@ -429,7 +439,7 @@ export default function ShopClient({ initialProducts, initialCategories }) {
                   >
                     All Brands
                   </button>
-                  {brands.map((b) => (
+                  {availableBrands.map((b) => (
                     <button
                       key={b.name}
                       onClick={() => {

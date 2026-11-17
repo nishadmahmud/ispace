@@ -4,6 +4,9 @@ import { brands } from "@/data/products";
 import { ArrowRight } from "lucide-react";
 
 export default function BrandBar() {
+  if (!brands || brands.length === 0) {
+    return null;
+  }
   return (
     <section className="py-8 sm:py-10 section-lifted">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

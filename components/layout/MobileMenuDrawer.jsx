@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import Logo from "@/components/common/Logo";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import { useStore } from "@/context/StoreContext";
-import { categories as defaultCategories } from "@/data/products";
 import { contactConfig } from "@/data/contact";
 import { getCategoriesFromServer } from "@/lib/api";
 import { slugifyProductName } from "@/lib/productSlug";
@@ -53,12 +52,7 @@ export default function MobileMenuDrawer({ initialCategories = [] }) {
 
   const navCategories = useMemo(() => {
     if (!Array.isArray(categoriesList) || categoriesList.length === 0) {
-      return defaultCategories.map((c) => ({
-        id: c.id,
-        name: c.name,
-        slug: c.slug,
-        subcategories: []
-      }));
+      return [];
     }
 
     return categoriesList.map((c) => ({
@@ -214,13 +208,6 @@ export default function MobileMenuDrawer({ initialCategories = [] }) {
               className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-[#9aa3af] font-semibold hover:bg-[#1c1f26] transition-colors"
             >
               <CreditCard className="w-4 h-4 text-[#6b7280]" /> 0% EMI Facility
-            </Link>
-            <Link
-              href="/exchange"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-[#9aa3af] font-semibold hover:bg-[#1c1f26] transition-colors"
-            >
-              <RotateCcw className="w-4 h-4 text-[#6b7280]" /> Trade-in & Exchange
             </Link>
             <Link
               href="/outlets"

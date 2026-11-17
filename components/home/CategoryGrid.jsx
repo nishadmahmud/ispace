@@ -1,10 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import { categories as defaultCategories } from "@/data/products";
 import { ArrowRight } from "lucide-react";
 
 export default function CategoryGrid({ categories }) {
-  const activeCategories = Array.isArray(categories) && categories.length > 0 ? categories : defaultCategories;
+  const activeCategories = Array.isArray(categories) && categories.length > 0 ? categories : [];
+
+  if (activeCategories.length === 0) {
+    return null;
+  }
   return (
     <section className="py-10 section-canvas">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

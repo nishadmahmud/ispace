@@ -5,6 +5,10 @@ import ProductRail from "@/components/home/ProductRail";
 export default function AppleShowcase() {
   const appleProducts = products.filter((p) => p.brand === "Apple" && !p.isPreOwned);
 
+  if (!appleProducts.length) {
+    return null;
+  }
+
   return (
     <ProductRail
       title="Apple Ecosystem"

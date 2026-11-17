@@ -6,7 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/common/Logo";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import { useStore } from "@/context/StoreContext";
-import { products, categories as defaultCategories } from "@/data/products";
 import { formatBDT } from "@/data/emi-banks";
 import { searchProducts, getCategoriesFromServer } from "@/lib/api";
 import { mapProductList } from "@/lib/productMapping";
@@ -72,27 +71,20 @@ export default function Header({ initialCategories = [] }) {
     const timer = setTimeout(async () => {
       try {
         const res = await searchProducts(searchQuery);
-        const list = res?.data || res?.products || [];
-        if (Array.isArray(list) && list.length > 0) {
+        const list = Array.isArray(res?.data?.data)
+          ? res.data.data
+          : Array.isArray(res?.data)
+          ? res.data
+          : Array.isArray(res?.products)
+          ? res.products
+          : [];
+        if (list.length > 0) {
           setSearchResults(mapProductList(list.slice(0, 6)));
         } else {
-          const q = searchQuery.toLowerCase();
-          const filtered = products.filter(
-            (p) =>
-              p.name.toLowerCase().includes(q) ||
-              p.brand.toLowerCase().includes(q) ||
-              p.category.toLowerCase().includes(q)
-          ).slice(0, 6);
-          setSearchResults(filtered);
+          setSearchResults([]);
         }
       } catch (err) {
-        const q = searchQuery.toLowerCase();
-        const filtered = products.filter(
-          (p) =>
-            p.name.toLowerCase().includes(q) ||
-            p.brand.toLowerCase().includes(q)
-        ).slice(0, 6);
-        setSearchResults(filtered);
+        setSearchResults([]);
       }
     }, 250);
     return () => clearTimeout(timer);
@@ -116,12 +108,7 @@ export default function Header({ initialCategories = [] }) {
 
   const navCategories = useMemo(() => {
     if (!Array.isArray(categoriesList) || categoriesList.length === 0) {
-      return defaultCategories.filter((c) => c.slug !== "pre-owned").map((c) => ({
-        id: c.id,
-        name: c.name,
-        slug: c.slug,
-        subcategories: []
-      }));
+      return [];
     }
 
     return categoriesList.map((c) => ({
@@ -171,14 +158,6 @@ export default function Header({ initialCategories = [] }) {
             >
               <CreditCard className="w-3 h-3 text-[#6b7280]" />
               <span>0% EMI Facility</span>
-            </Link>
-            <div className="h-2.5 w-px bg-[#3d4450]" />
-            <Link
-              href="/exchange"
-              className="flex items-center gap-1 hover:text-[#e8eaed] text-[#9aa3af] font-medium transition-colors"
-            >
-              <RotateCcw className="w-3 h-3 text-[#6b7280]" />
-              <span>Device Trade-in</span>
             </Link>
             <div className="h-2.5 w-px bg-[#3d4450]" />
             <Link

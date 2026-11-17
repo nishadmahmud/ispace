@@ -30,6 +30,10 @@ export default function ProductRail({
     return products.filter(filterFn).slice(0, limit);
   }, [products, activeTab, limit]);
 
+  if (!products || products.length === 0 || visible.length === 0) {
+    return null;
+  }
+
   return (
     <section className={`py-8 sm:py-10 ${lifted ? "section-lifted" : "section-canvas"}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

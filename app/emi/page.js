@@ -3,26 +3,15 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { emiBanks, calculateEMI, formatBDT } from "@/data/emi-banks";
-import { products } from "@/data/products";
 import { CreditCard, ArrowRight } from "lucide-react";
 
 export default function EMIPage() {
-  const [selectedProduct, setSelectedProduct] = useState(products[0]?.id || "");
-  const [customPrice, setCustomPrice] = useState(products[0]?.price || 169999);
+  const [customPrice, setCustomPrice] = useState(85000);
   const [selectedBank, setSelectedBank] = useState(emiBanks[0]?.id || "");
   const [selectedMonths, setSelectedMonths] = useState(12);
 
   const activeBank = emiBanks.find((b) => b.id === selectedBank) || emiBanks[0];
   const monthlyInstallment = calculateEMI(customPrice, selectedMonths);
-
-  const handleProductSelect = (e) => {
-    const id = e.target.value;
-    setSelectedProduct(id);
-    const prod = products.find((p) => p.id === id);
-    if (prod) {
-      setCustomPrice(prod.price);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-[#0c0e12] text-[#e8eaed] py-10">
@@ -61,33 +50,24 @@ export default function EMIPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Step 1: Device / Price */}
+            {/* Step 1: Price */}
             <div className="space-y-3">
               <label className="block text-xs font-bold text-[#9aa3af]">
-                1. Select Gadget or Enter Price (BDT)
+                1. Enter Gadget Price (BDT)
               </label>
-              <select
-                value={selectedProduct}
-                onChange={handleProductSelect}
-                className="w-full bg-[#1c1f26] border border-[#2a2e37] rounded-xl px-3 py-2.5 text-xs text-[#e8eaed] font-bold"
-              >
-                <option value="">Custom Price</option>
-                {products.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name} ({formatBDT(p.price)})
-                  </option>
-                ))}
-              </select>
               <div className="relative">
                 <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6b7280] text-xs">৳</span>
                 <input
                   type="number"
                   value={customPrice}
-                  onChange={(e) => setCustomPrice(Number(e.target.value))}
-                  placeholder="Enter custom amount"
-                  className="w-full h-10 pl-8 pr-3 rounded-xl bg-[#1c1f26] border border-[#2a2e37] text-xs text-[#e8eaed] font-bold"
+                  onChange={(e) => setCustomPrice(Math.max(0, Number(e.target.value)))}
+                  placeholder="e.g. 85000"
+                  className="w-full h-11 pl-8 pr-3 rounded-xl bg-[#1c1f26] border border-[#2a2e37] text-xs text-[#e8eaed] font-bold focus:outline-none focus:border-[#c45c5c]"
                 />
               </div>
+              <p className="text-[11px] text-[#6b7280]">
+                Enter any device price to calculate bank monthly installments.
+              </p>
             </div>
 
             {/* Step 2: Bank */}

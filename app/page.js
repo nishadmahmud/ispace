@@ -5,10 +5,7 @@ import CategoryGrid from "@/components/home/CategoryGrid";
 import FlashDeals from "@/components/home/FlashDeals";
 import PromoBanners from "@/components/home/PromoBanners";
 import ProductRail from "@/components/home/ProductRail";
-import AppleShowcase from "@/components/home/AppleShowcase";
-import BrandBar from "@/components/home/BrandBar";
 import ShowroomsSection from "@/components/home/ShowroomsSection";
-import { products as fallbackProducts } from "@/data/products";
 import {
   getCategoriesFromServer,
   getSlidersFromServer,
@@ -81,25 +78,10 @@ export default async function HomePage() {
       : null;
 
   // Products mapping
-  const apiNewArrivals = mapProductList(newArrivalsRes?.data?.data);
-  const apiBestDeals = mapProductList(bestDealsRes?.data);
-  const apiBestSellers = mapProductList(bestSellersRes?.data);
-
-  const newArrivals = apiNewArrivals.length > 0
-    ? apiNewArrivals
-    : fallbackProducts.filter((p) => p.isNew && !p.isPreOwned);
-
-  const hotDeals = apiBestDeals.length > 0
-    ? apiBestDeals
-    : fallbackProducts.filter((p) => p.isFlashDeal || (p.regularPrice > p.price && !p.isPreOwned));
-
-  const trending = apiBestSellers.length > 0
-    ? apiBestSellers
-    : fallbackProducts.filter((p) => p.featured && !p.isPreOwned);
-
-  const popular = apiBestSellers.length > 0
-    ? apiBestSellers
-    : [...fallbackProducts].sort((a, b) => b.reviewCount - a.reviewCount);
+  const newArrivals = mapProductList(newArrivalsRes?.data?.data);
+  const hotDeals = mapProductList(bestDealsRes?.data);
+  const trending = mapProductList(bestSellersRes?.data);
+  const popular = trending;
 
   return (
     <div className="min-h-screen text-[#e8eaed] flex flex-col">
@@ -121,7 +103,6 @@ export default async function HomePage() {
           { id: "value", label: "Best Value" },
         ]}
       />
-      <BrandBar />
       <ProductRail
         title="New Arrivals"
         subtitle="Fresh stock just landed"
@@ -133,7 +114,6 @@ export default async function HomePage() {
           { id: "popular", label: "Popular" },
         ]}
       />
-      <AppleShowcase />
       <ProductRail
         title="Most Popular"
         subtitle="Crowd favourites this week"

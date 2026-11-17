@@ -206,12 +206,18 @@ export default function ProductDetailClient({ product, relatedProducts }) {
 
             {/* Ratings & Stock */}
             <div className="flex items-center gap-3 mt-2 text-xs text-[#6b7280] flex-wrap">
-              <div className="flex items-center gap-1 text-[#e8eaed]">
-                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                <span className="font-bold">{product.rating}</span>
-                <span className="text-[#6b7280]">({product.reviewCount} reviews)</span>
-              </div>
-              <span className="text-[#9aa3af]">•</span>
+              {product.rating && (
+                <>
+                  <div className="flex items-center gap-1 text-[#e8eaed]">
+                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                    <span className="font-bold">{product.rating}</span>
+                    {product.reviewCount > 0 && (
+                      <span className="text-[#6b7280]">({product.reviewCount} reviews)</span>
+                    )}
+                  </div>
+                  <span className="text-[#9aa3af]">•</span>
+                </>
+              )}
               <span className="flex items-center gap-1.5 text-emerald-400 font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> In Stock
               </span>

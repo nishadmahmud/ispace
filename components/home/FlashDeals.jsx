@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { products } from "@/data/products";
 import ProductCard from "@/components/product/ProductCard";
 import { Flame, Clock, ArrowRight } from "lucide-react";
 
@@ -30,8 +29,11 @@ export default function FlashDeals({ items }) {
     return () => clearInterval(timer);
   }, []);
 
-  const defaultFlash = products.filter((p) => p.isFlashDeal).slice(0, 5);
-  const flashItems = Array.isArray(items) && items.length > 0 ? items.slice(0, 5) : defaultFlash;
+  const flashItems = Array.isArray(items) && items.length > 0 ? items.slice(0, 5) : [];
+
+  if (flashItems.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-8 sm:py-10 section-lifted">

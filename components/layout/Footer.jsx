@@ -218,11 +218,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/exchange" className="hover:text-[#ef233c] transition-colors">
-                  Device Trade-in Program
-                </Link>
-              </li>
-              <li>
                 <Link href="/outlets" className="hover:text-[#ef233c] transition-colors">
                   Our Showroom Outlets
                 </Link>
