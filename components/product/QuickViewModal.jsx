@@ -15,6 +15,9 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
   const [selectedStorage, setSelectedStorage] = useState(
     product.storage?.[0]?.size || ""
   );
+  const [selectedSim, setSelectedSim] = useState(
+    product.simOptions?.[0] || ""
+  );
   const [priceOffset, setPriceOffset] = useState(
     product.storage?.[0]?.priceOffset || 0
   );
@@ -34,6 +37,7 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
     addToCart(product, {
       color: selectedColor,
       storage: selectedStorage,
+      sim: selectedSim,
       priceOffset: priceOffset
     });
     onClose();
@@ -128,7 +132,9 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
               </div>
 
               {/* Color Selector */}
-              {product.colors && product.colors.length > 0 && (
+              {product.colors &&
+                product.colors.length > 0 &&
+                !(product.colors.length === 1 && product.colors[0].name === "Standard") && (
                 <div>
                   <label className="block text-xs font-bold text-[#9aa3af] mb-2">
                     Color: <span className="text-[#e8eaed] font-extrabold">{selectedColor}</span>
@@ -156,10 +162,12 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
               )}
 
               {/* Storage Variant Selector */}
-              {product.storage && product.storage.length > 1 && (
+              {product.storage &&
+                product.storage.length > 0 &&
+                !(product.storage.length === 1 && product.storage[0].size === "Standard") && (
                 <div>
                   <label className="block text-xs font-bold text-[#9aa3af] mb-2">
-                    Capacity: <span className="text-[#e8eaed] font-extrabold">{selectedStorage}</span>
+                    Storage: <span className="text-[#e8eaed] font-extrabold">{selectedStorage}</span>
                   </label>
                   <div className="grid grid-cols-3 gap-2">
                     {product.storage.map((s) => (
@@ -176,6 +184,37 @@ export default function QuickViewModal({ product, isOpen, onClose }) {
                       </button>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {product.simOptions && product.simOptions.length > 0 && (
+                <div>
+                  <label className="block text-xs font-bold text-[#9aa3af] mb-2">
+                    Region: <span className="text-[#e8eaed] font-extrabold">{selectedSim || product.simOptions[0]}</span>
+                  </label>
+                  <div className="grid grid-cols-1 gap-2">
+                    {product.simOptions.map((sim) => (
+                      <button
+                        key={sim}
+                        type="button"
+                        onClick={() => setSelectedSim(sim)}
+                        className={`px-3 py-2 rounded-xl border text-xs text-left transition-all cursor-pointer ${
+                          (selectedSim || product.simOptions[0]) === sim
+                            ? "border-[#2a2e37] bg-[#1c1f26] text-[#e8eaed] font-bold ring-1 ring-gray-900"
+                            : "border-[#2a2e37] bg-[#14171c] text-[#9aa3af] hover:border-[#3d4450]"
+                        }`}
+                      >
+                        {sim}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {product.batteryHealth && (
+                <div className="text-xs text-[#9aa3af]">
+                  Battery Health:{" "}
+                  <span className="font-bold text-[#e8eaed]">{product.batteryHealth}</span>
                 </div>
               )}
 

@@ -253,19 +253,32 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 <span className="text-[#6b7280] block text-[11px]">Warranty</span>
                 <span className="font-bold text-[#e8eaed]">1 Year Official</span>
               </div>
+              {product.batteryHealth ? (
+                <div className="bg-[#1c1f26] p-2.5 rounded-xl border border-[#2a2e37]">
+                  <span className="text-[#6b7280] block text-[11px]">Battery Health</span>
+                  <span className="font-bold text-[#e8eaed]">{product.batteryHealth}</span>
+                </div>
+              ) : (
+                <div className="bg-[#1c1f26] p-2.5 rounded-xl border border-[#2a2e37]">
+                  <span className="text-[#6b7280] block text-[11px]">0% EMI</span>
+                  <span className="font-bold text-[#e8eaed]">From {formatBDT(calculateEMI(currentPrice, 36))}/mo</span>
+                </div>
+              )}
               <div className="bg-[#1c1f26] p-2.5 rounded-xl border border-[#2a2e37]">
-                <span className="text-[#6b7280] block text-[11px]">0% EMI</span>
-                <span className="font-bold text-[#e8eaed]">From {formatBDT(calculateEMI(currentPrice, 36))}/mo</span>
-              </div>
-              <div className="bg-[#1c1f26] p-2.5 rounded-xl border border-[#2a2e37]">
-                <span className="text-[#6b7280] block text-[11px]">Delivery</span>
-                <span className="font-bold text-[#e8eaed]">24-48 Hours</span>
+                <span className="text-[#6b7280] block text-[11px]">
+                  {selectedSim ? "Region" : "Delivery"}
+                </span>
+                <span className="font-bold text-[#e8eaed] line-clamp-2">
+                  {selectedSim || "24-48 Hours"}
+                </span>
               </div>
             </div>
           </div>
 
           {/* Color Selector */}
-          {product.colors && product.colors.length > 0 && (
+          {product.colors &&
+            product.colors.length > 0 &&
+            !(product.colors.length === 1 && product.colors[0].name === "Standard") && (
             <div className="space-y-2">
               <label className="block text-xs font-bold text-[#9aa3af]">
                 Color: <span className="text-[#e8eaed] font-extrabold">{selectedColor}</span>
@@ -297,10 +310,12 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           )}
 
           {/* Storage / Configuration Selector */}
-          {product.storage && product.storage.length > 1 && (
+          {product.storage &&
+            product.storage.length > 0 &&
+            !(product.storage.length === 1 && product.storage[0].size === "Standard") && (
             <div className="space-y-2">
               <label className="block text-xs font-bold text-[#9aa3af]">
-                Configuration: <span className="text-[#e8eaed] font-extrabold">{selectedStorage}</span>
+                Storage: <span className="text-[#e8eaed] font-extrabold">{selectedStorage}</span>
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                 {product.storage.map((s) => {
@@ -318,7 +333,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                     >
                       <span className="block text-xs font-bold text-[#e8eaed]">{s.size}</span>
                       <span className="block text-[11px] text-[#6b7280] mt-0.5">
-                        {s.priceOffset === 0 ? "Standard" : `+${formatBDT(s.priceOffset)}`}
+                        {s.priceOffset === 0 ? "From base price" : `+${formatBDT(s.priceOffset)}`}
                       </span>
                     </button>
                   );
@@ -328,10 +343,10 @@ export default function ProductDetailClient({ product, relatedProducts }) {
           )}
 
           {/* SIM / Region Selector */}
-          {product.simOptions && product.simOptions.length > 1 && (
+          {product.simOptions && product.simOptions.length > 0 && (
             <div className="space-y-2">
               <label className="block text-xs font-bold text-[#9aa3af]">
-                SIM / Regional Edition: <span className="text-[#e8eaed] font-extrabold">{selectedSim}</span>
+                Region: <span className="text-[#e8eaed] font-extrabold">{selectedSim}</span>
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {product.simOptions.map((sim) => {
